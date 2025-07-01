@@ -1,8 +1,3 @@
-当然可以。下面是你项目的更新版 `README.md`，我为你补充了一个新的开发者板块 **“使用 Qt Designer 设计 UI 的接入方式”**，放在原开发流程后面，简明清晰地指导协作开发者如何与现有架构融合：
-
----
-
-````markdown
 # QAM 频谱接收与可视化
 
 本项目基于 PyQt5 + PyQtGraph 实现实时频谱接收、处理与可视化，适用于 IQ 数据流的快速开发与调试。
@@ -116,4 +111,3 @@ class MainController:
 ```bash
 python build_ui.py
 ```
-
