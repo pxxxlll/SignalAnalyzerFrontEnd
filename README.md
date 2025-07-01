@@ -1,113 +1,116 @@
-# QAM 频谱接收与可视化
+# QAMSignalProcessing
 
-本项目基于 PyQt5 + PyQtGraph 实现实时频谱接收、处理与可视化，适用于 IQ 数据流的快速开发与调试。
-
----
-
-## 功能概览
-
-- ✅ 支持通过 TCP 接收 IQ 数据（1024 点/帧，交错 I/Q）
-- ✅ 实时 FFT 运算，展示频谱图
-- ✅ 可扩展的数据处理与可视化结构
-- ✅ 兼容 PyQt5 线程模型，不卡 GUI
-
----
-
-## 启动方式
-
-开发者直接执行：
-
-```bash
-python ./src/controller.py
-````
-
----
-
-## 文件结构概览
+## 📆 项目结构
 
 ```
 src/
-├── controller.py         # 主控制器，连接 UI 与模块
-├── receiver.py           # 数据接收模块（TCP server）
-├── processor.py          # FFT 处理逻辑
-├── display.py            # 频谱绘图封装（QWidget）
-├── buffer.py             # 简单线程安全队列
-├── ui/
-│   ├── main_window.ui    # Qt Designer 文件（可选）
-│   └── main_window_ui.py # 由 pyuic5 生成
+├── controller.py        # 应用主控制器（程序入口）
+├── receiver.py          # 数据接收模块（TCP Server）
+├── processor.py         # IQ 转频谱处理模块
+├── display.py           # 频谱绘图（PyQt + pyqtgraph）
+├── buffer.py            # 简单线程安全缓冲区
+├── ui/                  # QtDesigner 生成的 UI 文件与转换文件
+tests/
+├── iq_test_client.py    # 模拟客户端，定时发送 IQ 测试数据
+build_ui.py              # 将 .ui 文件转换为 Python 模块
 ```
 
 ---
 
-## TODO
+## 🚀 启动方式
 
-* [ ] 明确下位机是 TCP server 还是 client（目前为 TCP client）
-* [ ] 明确下位机发送的 8bit IQ 数据是 **有符号** 还是无符号
-* [ ] 添加帧头识别与校验
-* [ ] 增加频谱平滑或平均功能
-
----
-
-## 开发流程建议
-
-### 1. 克隆仓库
+开发时从项目根目录启动：
 
 ```bash
-git clone <此处填写项目 git 地址>
-cd 项目目录
+python ./src/controller.py
 ```
 
-建议使用虚拟环境安装依赖：
+依赖库：
 
 ```bash
-conda create -n qam_vis python=3.8
-conda activate qam_vis
-pip install -r requirements.txt
+pip install pyqt5 pyqtgraph numpy
 ```
 
 ---
 
-## 🧩 使用 Qt Designer 设计 UI 的接入方式
+## 🥪 测试客户端（模拟 IQ 数据）
 
-如果你使用 Qt Designer 修改或新增界面：
-
-### 1. 保存 `.ui` 文件至：
-
-```
-src/ui/main_window.ui
-```
-
-### 2. 使用 pyuic5 转换为 Python 文件
+用于测试接收与频谱处理流程：
 
 ```bash
-pyuic5 -o src/ui/main_window_ui.py src/ui/main_window.ui
+python tests/iq_test_client.py
 ```
 
-> 注意：如使用 Qt6，则使用 `pyuic6`。
+说明：
 
-### 3. 在 controller.py 中加载并绑定 UI
-
-```python
-from ui.main_window_ui import Ui_MainWindow
-
-class MainController:
-    def __init__(self):
-        self.window = QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.window)
-
-        # 示例：将自定义频谱控件插入到 UI 占位容器中
-        layout = QVBoxLayout(self.ui.spectrumArea)
-        layout.addWidget(SpectrumDisplay())
-```
-
-* 自定义控件如 `SpectrumDisplay` 仍然写在 `display.py` 中。
-* UI 层与功能模块解耦，便于分工协作与维护。
+* 通过 TCP 主动连接 `127.0.0.1:5000`
+* 每秒发送 50 帧，每帧 2048 字节（1024 组 IQ）
+* IQ 数据为 8bit（有符号）交错排列（I,Q,I,Q,...）
 
 ---
 
-如需自动批量转换 `.ui` 文件，可使用：
+## 🔁 Qt Designer UI 集成方式
+
+* `.ui` 文件保存在 `src/ui/` 中
+* 使用 `build_ui.py` 自动将其转换为 Python 代码：
 
 ```bash
 python build_ui.py
+```
+
+在主程序中以类继承形式集成 UI：
+
+```python
+from src.ui.main_window_ui import Ui_MainWindow
+
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+```
+
+---
+
+## 👥 协作者 Git 提交与协作流程
+
+本项目远程仓库：
+
+```
+https://github.com/pxxxlll/QAMSignalProcessing.git
+```
+
+### 克隆项目：
+
+```bash
+git clone https://github.com/pxxxlll/QAMSignalProcessing.git
+cd QAMSignalProcessing
+```
+
+### 初始提交：
+
+```bash
+git checkout -b your_branch_name
+git add .
+git commit -m "描述你的修改"
+git push -u origin your_branch_name
+```
+
+### 后续提交：
+
+```bash
+git add .
+git commit -m "更新内容"
+git push
+```
+
+> 建议为每个功能模块单独开分支，最终通过 Pull Request 合并。
+
+---
+
+## 🛠️ TODO
+
+* [ ] 明确：下位机是 TCP Server 还是 Client（当前默认下位机为 TCP 客户端，主动连接）
+* [ ] 明确：IQ 数据格式是 `int8`（有符号）还是 `uint8`（无符号）
+
+```
 ```
