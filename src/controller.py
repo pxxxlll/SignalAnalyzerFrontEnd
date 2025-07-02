@@ -8,7 +8,7 @@ from display import SpectrumDisplay
 class MainController(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("IQ频谱分析仪")
+        self.setWindowTitle("频谱分析")
         self.resize(800, 600)
 
         # 模块初始化
