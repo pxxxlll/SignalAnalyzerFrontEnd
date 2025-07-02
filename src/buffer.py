@@ -1,7 +1,7 @@
 # buffer.py
 from queue import Queue, Empty
 
-class FrameBuffer:
+class BlockBuffer:
     def __init__(self, max_size=100):
         self.queue = Queue(maxsize=max_size)
 

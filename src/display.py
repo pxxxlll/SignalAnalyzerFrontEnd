@@ -1,6 +1,6 @@
 # display.py
 import pyqtgraph as pg
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
 import numpy as np
@@ -12,6 +12,8 @@ ch = logging.StreamHandler()
 formatter = logging.Formatter("[%(name)s] %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+# 这个类只更新 UI, 且提供更新 Widget 状态的方法, 但是不对外界的其他状态做检查 (那是 Controller 的职责)
 
 class SpectrumDisplay(QWidget):
     def __init__(self, parent=None, fft_size=1024, sample_rate=1_000_000):
@@ -28,8 +30,14 @@ class SpectrumDisplay(QWidget):
         # self.plot_widget.setYRange(-100, 0)
         self.plot_widget.enableAutoRange(axis='y')
 
+        self.label_status = QLabel("未连接")
+        self.btn_start = QPushButton("开始")
+        self.btn_start.setEnabled(False)
+
         layout = QVBoxLayout()
         layout.addWidget(self.plot_widget)
+        layout.addWidget(self.label_status)
+        layout.addWidget(self.btn_start)
         self.setLayout(layout)
 
         # 明确创建 PlotDataItem（避免 plot() 自动行为）
@@ -39,6 +47,16 @@ class SpectrumDisplay(QWidget):
         # 构造频率轴
         self.freq_axis = np.linspace(-self.sample_rate / 2, self.sample_rate / 2, self.fft_size, endpoint=False)
         self.plot_widget.setXRange(self.freq_axis[0], self.freq_axis[-1])
+
+    def try_enable_start(self, is_connected):
+        if is_connected:
+            logger.debug("Enabling start...")
+            self.label_status.setText("已连接")
+            self.btn_start.setEnabled(True)
+            return
+
+        logger.debug("client_connected was signaled but there's no valid connection.")
+
 
     def update_spectrum(self, magnitude_array):
         if magnitude_array.shape[0] != self.fft_size:
