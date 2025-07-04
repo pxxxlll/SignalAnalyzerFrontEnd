@@ -1,0 +1,180 @@
+timestamp=[2023-08-28 13:17:26], mode=WORKBENCH_START, duration=0:00:03.058, duration_ms=3058, data={}
+timestamp=[2023-08-28 13:17:26], mode=WORKBENCH_UI_INIT, duration=0:00:00.585, duration_ms=585, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
+timestamp=[2023-08-28 13:18:03], mode=PLATFORM_CREATION, duration=0:00:07.336, duration_ms=7336, data={platform_source=dsa, os=standalone, processor=ps7_cortexa9, platform=null}
+timestamp=[2023-08-28 13:18:23], mode=PLATFORM_GENERATION, duration=0:00:00.842, duration_ms=842, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:18:54], mode=PLATFORM_GENERATION, duration=0:00:27.507, duration_ms=27507, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:20:45], mode=PLATFORM_GENERATION, duration=0:00:17.852, duration_ms=17852, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:21:04], mode=APP_CREATION, duration=0:00:03.623, duration_ms=3623, data={name=tcp_9361, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=zed_9361_tcp, application_type=application}
+timestamp=[2023-08-28 13:23:52], mode=PLATFORM_GENERATION, duration=0:00:00.747, duration_ms=747, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:24:22], mode=PLATFORM_GENERATION, duration=0:00:25.635, duration_ms=25635, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:31:30], mode=PLATFORM_GENERATION, duration=0:00:00.744, duration_ms=744, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:32:00], mode=PLATFORM_GENERATION, duration=0:00:25.774, duration_ms=25774, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:41:45], mode=PLATFORM_GENERATION, duration=0:00:00.805, duration_ms=805, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:42:13], mode=PLATFORM_GENERATION, duration=0:00:25.698, duration_ms=25698, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:42:33], mode=PLATFORM_GENERATION, duration=0:00:00.756, duration_ms=756, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:43:00], mode=PLATFORM_GENERATION, duration=0:00:24.991, duration_ms=24991, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:52:18], mode=WORKBENCH_START, duration=0:00:02.834, duration_ms=2834, data={}
+timestamp=[2023-08-28 13:52:18], mode=WORKBENCH_UI_INIT, duration=0:00:00.539, duration_ms=539, data={editors_count=1, platform_editors_count=1, projects_count=2, platform_projects_count=1, active_platform_editor=true, projects=RemoteSystemsTempFiles,zed_9361_tcp}
+timestamp=[2023-08-28 13:52:39], mode=PLATFORM_GENERATION, duration=0:00:00.810, duration_ms=810, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:53:10], mode=PLATFORM_GENERATION, duration=0:00:26.128, duration_ms=26128, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 13:53:31], mode=WORKBENCH_START, duration=0:00:03.014, duration_ms=3014, data={}
+timestamp=[2023-08-28 13:53:32], mode=WORKBENCH_UI_INIT, duration=0:00:00.501, duration_ms=501, data={editors_count=1, platform_editors_count=1, projects_count=2, platform_projects_count=1, active_platform_editor=true, projects=RemoteSystemsTempFiles,zed_9361_tcp}
+timestamp=[2023-08-28 13:54:17], mode=PLATFORM_GENERATION, duration=0:00:18.000, duration_ms=18000, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:09:17], mode=APP_CREATION, duration=0:00:03.708, duration_ms=3708, data={name=tcp_9361, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=zed_9361_tcp, application_type=application}
+timestamp=[2023-08-28 15:15:50], mode=PLATFORM_GENERATION, duration=0:00:00.791, duration_ms=791, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:16:18], mode=PLATFORM_GENERATION, duration=0:00:25.569, duration_ms=25569, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:26:10], mode=PLATFORM_GENERATION, duration=0:00:00.811, duration_ms=811, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:26:38], mode=PLATFORM_GENERATION, duration=0:00:25.649, duration_ms=25649, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:40:06], mode=PLATFORM_GENERATION, duration=0:00:00.766, duration_ms=766, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:40:35], mode=PLATFORM_GENERATION, duration=0:00:25.523, duration_ms=25523, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:55:38], mode=PLATFORM_GENERATION, duration=0:00:00.806, duration_ms=806, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:59:25], mode=PLATFORM_GENERATION, duration=0:00:00.794, duration_ms=794, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 15:59:54], mode=PLATFORM_GENERATION, duration=0:00:26.043, duration_ms=26043, data={name=zed_9361_tcp}
+timestamp=[2023-08-28 17:20:39], mode=PLATFORM_GENERATION, duration=0:00:20.235, duration_ms=20235, data={name=zed_9361_tcp}
+timestamp=[2023-08-29 09:23:08], mode=WORKBENCH_START, duration=0:00:06.195, duration_ms=6195, data={}
+timestamp=[2023-08-29 09:23:09], mode=WORKBENCH_UI_INIT, duration=0:00:00.650, duration_ms=650, data={editors_count=13, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-29 09:43:32], mode=PLATFORM_GENERATION, duration=0:00:03.550, duration_ms=3550, data={name=zed_9361_tcp}
+timestamp=[2023-08-29 09:44:07], mode=PLATFORM_GENERATION, duration=0:00:32.368, duration_ms=32368, data={name=zed_9361_tcp}
+timestamp=[2023-08-29 11:24:09], mode=WORKBENCH_START, duration=0:00:06.085, duration_ms=6085, data={}
+timestamp=[2023-08-29 11:24:10], mode=WORKBENCH_UI_INIT, duration=0:00:00.786, duration_ms=786, data={editors_count=15, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-29 11:27:00], mode=PLATFORM_GENERATION, duration=0:00:19.047, duration_ms=19047, data={name=zed_9361_tcp}
+timestamp=[2023-08-29 14:30:05], mode=WORKBENCH_START, duration=0:00:06.009, duration_ms=6009, data={}
+timestamp=[2023-08-29 14:30:06], mode=WORKBENCH_UI_INIT, duration=0:00:00.698, duration_ms=698, data={editors_count=9, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-29 16:06:13], mode=WORKBENCH_START, duration=0:00:04.942, duration_ms=4942, data={}
+timestamp=[2023-08-29 16:06:14], mode=WORKBENCH_UI_INIT, duration=0:00:00.650, duration_ms=650, data={editors_count=9, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-29 16:57:46], mode=WORKBENCH_START, duration=0:00:04.981, duration_ms=4981, data={}
+timestamp=[2023-08-29 16:57:47], mode=WORKBENCH_UI_INIT, duration=0:00:00.572, duration_ms=572, data={editors_count=9, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-30 11:21:48], mode=WORKBENCH_START, duration=0:00:04.597, duration_ms=4597, data={}
+timestamp=[2023-08-30 11:21:49], mode=WORKBENCH_UI_INIT, duration=0:00:00.638, duration_ms=638, data={editors_count=9, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-08-30 11:22:11], mode=PLATFORM_GENERATION, duration=0:00:16.565, duration_ms=16565, data={name=zed_9361_tcp}
+timestamp=[2023-10-06 08:53:44], mode=WORKBENCH_START, duration=0:00:06.209, duration_ms=6209, data={}
+timestamp=[2023-10-06 08:53:45], mode=WORKBENCH_UI_INIT, duration=0:00:00.570, duration_ms=570, data={editors_count=9, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-06 08:54:12], mode=PLATFORM_GENERATION, duration=0:00:02.980, duration_ms=2980, data={name=zed_9361_tcp}
+timestamp=[2023-10-06 08:54:45], mode=PLATFORM_GENERATION, duration=0:00:27.920, duration_ms=27920, data={name=zed_9361_tcp}
+timestamp=[2023-10-06 08:57:04], mode=PLATFORM_GENERATION, duration=0:00:00.785, duration_ms=785, data={name=zed_9361_tcp}
+timestamp=[2023-10-07 08:54:37], mode=WORKBENCH_START, duration=0:00:04.652, duration_ms=4652, data={}
+timestamp=[2023-10-07 08:54:37], mode=WORKBENCH_UI_INIT, duration=0:00:00.489, duration_ms=489, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-07 10:46:11], mode=WORKBENCH_START, duration=0:00:04.995, duration_ms=4995, data={}
+timestamp=[2023-10-07 10:46:11], mode=WORKBENCH_UI_INIT, duration=0:00:00.418, duration_ms=418, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-08 09:20:37], mode=WORKBENCH_START, duration=0:00:06.520, duration_ms=6520, data={}
+timestamp=[2023-10-08 09:20:38], mode=WORKBENCH_UI_INIT, duration=0:00:00.491, duration_ms=491, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-08 09:21:44], mode=WORKBENCH_START, duration=0:00:04.156, duration_ms=4156, data={}
+timestamp=[2023-10-08 09:21:44], mode=WORKBENCH_UI_INIT, duration=0:00:00.532, duration_ms=532, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-08 09:22:15], mode=PLATFORM_GENERATION, duration=0:00:17.884, duration_ms=17884, data={name=zed_9361_tcp}
+timestamp=[2023-10-08 09:22:17], mode=MISC, duration=0:00:02.065, duration_ms=2065, data={name=tcp_9361_system, type=bif_creation}
+timestamp=[2023-10-08 10:52:14], mode=WORKBENCH_START, duration=0:00:04.595, duration_ms=4595, data={}
+timestamp=[2023-10-08 10:52:15], mode=WORKBENCH_UI_INIT, duration=0:00:00.550, duration_ms=550, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-10-23 09:16:59], mode=WORKBENCH_START, duration=0:00:10.264, duration_ms=10264, data={}
+timestamp=[2023-10-23 09:17:00], mode=WORKBENCH_UI_INIT, duration=0:00:01.083, duration_ms=1083, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-01 17:26:16], mode=WORKBENCH_START, duration=0:00:08.022, duration_ms=8022, data={}
+timestamp=[2023-11-01 17:26:16], mode=WORKBENCH_UI_INIT, duration=0:00:00.770, duration_ms=770, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-01 17:29:59], mode=PLATFORM_GENERATION, duration=0:00:22.296, duration_ms=22296, data={name=zed_9361_tcp}
+timestamp=[2023-11-02 15:50:05], mode=WORKBENCH_START, duration=0:00:09.415, duration_ms=9415, data={}
+timestamp=[2023-11-02 15:50:06], mode=WORKBENCH_UI_INIT, duration=0:00:00.896, duration_ms=896, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-02 20:59:25], mode=WORKBENCH_START, duration=0:00:07.326, duration_ms=7326, data={}
+timestamp=[2023-11-02 20:59:26], mode=WORKBENCH_UI_INIT, duration=0:00:00.783, duration_ms=783, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-03 13:49:12], mode=WORKBENCH_START, duration=0:00:11.278, duration_ms=11278, data={}
+timestamp=[2023-11-03 13:49:12], mode=WORKBENCH_UI_INIT, duration=0:00:00.911, duration_ms=911, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-03 14:52:37], mode=WORKBENCH_START, duration=0:00:09.680, duration_ms=9680, data={}
+timestamp=[2023-11-03 14:52:38], mode=WORKBENCH_UI_INIT, duration=0:00:00.919, duration_ms=919, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-03 15:52:07], mode=PLATFORM_GENERATION, duration=0:00:31.755, duration_ms=31755, data={name=zed_9361_tcp}
+timestamp=[2023-11-03 18:34:00], mode=WORKBENCH_START, duration=0:00:07.887, duration_ms=7887, data={}
+timestamp=[2023-11-03 18:34:00], mode=WORKBENCH_UI_INIT, duration=0:00:00.676, duration_ms=676, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-04 13:51:10], mode=WORKBENCH_START, duration=0:00:10.929, duration_ms=10929, data={}
+timestamp=[2023-11-04 13:51:11], mode=WORKBENCH_UI_INIT, duration=0:00:00.787, duration_ms=787, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-04 14:47:52], mode=PLATFORM_GENERATION, duration=0:00:02.236, duration_ms=2236, data={name=zed_9361_tcp}
+timestamp=[2023-11-05 12:30:33], mode=WORKBENCH_START, duration=0:00:11.262, duration_ms=11262, data={}
+timestamp=[2023-11-05 12:30:33], mode=WORKBENCH_UI_INIT, duration=0:00:00.748, duration_ms=748, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-05 13:21:18], mode=PLATFORM_GENERATION, duration=0:00:02.295, duration_ms=2295, data={name=zed_9361_tcp}
+timestamp=[2023-11-05 17:04:42], mode=WORKBENCH_START, duration=0:00:07.611, duration_ms=7611, data={}
+timestamp=[2023-11-05 17:04:43], mode=WORKBENCH_UI_INIT, duration=0:00:00.783, duration_ms=783, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-05 17:52:15], mode=WORKBENCH_START, duration=0:00:07.814, duration_ms=7814, data={}
+timestamp=[2023-11-05 17:52:16], mode=WORKBENCH_UI_INIT, duration=0:00:00.764, duration_ms=764, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-05 19:50:21], mode=WORKBENCH_START, duration=0:00:07.951, duration_ms=7951, data={}
+timestamp=[2023-11-05 19:50:22], mode=WORKBENCH_UI_INIT, duration=0:00:00.820, duration_ms=820, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-06 10:13:13], mode=WORKBENCH_START, duration=0:00:08.998, duration_ms=8998, data={}
+timestamp=[2023-11-06 10:13:14], mode=WORKBENCH_UI_INIT, duration=0:00:00.818, duration_ms=818, data={editors_count=15, platform_editors_count=3, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-06 13:23:32], mode=WORKBENCH_START, duration=0:00:07.863, duration_ms=7863, data={}
+timestamp=[2023-11-06 13:23:33], mode=WORKBENCH_UI_INIT, duration=0:00:00.850, duration_ms=850, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-06 16:55:25], mode=WORKBENCH_START, duration=0:00:07.729, duration_ms=7729, data={}
+timestamp=[2023-11-06 16:55:26], mode=WORKBENCH_UI_INIT, duration=0:00:00.767, duration_ms=767, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-06 18:08:41], mode=WORKBENCH_START, duration=0:00:07.602, duration_ms=7602, data={}
+timestamp=[2023-11-06 18:08:42], mode=WORKBENCH_UI_INIT, duration=0:00:00.765, duration_ms=765, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-06 21:06:15], mode=WORKBENCH_START, duration=0:00:08.202, duration_ms=8202, data={}
+timestamp=[2023-11-06 21:06:16], mode=WORKBENCH_UI_INIT, duration=0:00:00.773, duration_ms=773, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-07 14:24:58], mode=WORKBENCH_START, duration=0:00:11.487, duration_ms=11487, data={}
+timestamp=[2023-11-07 14:24:59], mode=WORKBENCH_UI_INIT, duration=0:00:00.792, duration_ms=792, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-07 15:11:07], mode=WORKBENCH_START, duration=0:00:07.538, duration_ms=7538, data={}
+timestamp=[2023-11-07 15:11:08], mode=WORKBENCH_UI_INIT, duration=0:00:00.833, duration_ms=833, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-21 09:39:25], mode=WORKBENCH_START, duration=0:00:07.735, duration_ms=7735, data={}
+timestamp=[2023-11-21 09:39:26], mode=WORKBENCH_UI_INIT, duration=0:00:00.782, duration_ms=782, data={editors_count=12, platform_editors_count=2, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-21 09:41:58], mode=PLATFORM_GENERATION, duration=0:00:25.451, duration_ms=25451, data={name=zed_9361_tcp}
+timestamp=[2023-11-21 10:15:52], mode=WORKBENCH_START, duration=0:00:07.797, duration_ms=7797, data={}
+timestamp=[2023-11-21 10:15:52], mode=WORKBENCH_UI_INIT, duration=0:00:00.342, duration_ms=342, data={editors_count=0, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-21 10:37:06], mode=WORKBENCH_START, duration=0:00:08.131, duration_ms=8131, data={}
+timestamp=[2023-11-21 10:37:07], mode=WORKBENCH_UI_INIT, duration=0:00:00.860, duration_ms=860, data={editors_count=1, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-22 09:38:34], mode=WORKBENCH_START, duration=0:00:09.079, duration_ms=9079, data={}
+timestamp=[2023-11-22 09:38:34], mode=WORKBENCH_UI_INIT, duration=0:00:00.762, duration_ms=762, data={editors_count=2, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-22 10:31:50], mode=PLATFORM_GENERATION, duration=0:00:30.267, duration_ms=30267, data={name=zed_9361_tcp}
+timestamp=[2023-11-22 12:53:19], mode=WORKBENCH_START, duration=0:00:07.854, duration_ms=7854, data={}
+timestamp=[2023-11-22 12:53:20], mode=WORKBENCH_UI_INIT, duration=0:00:00.780, duration_ms=780, data={editors_count=2, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-11-22 15:08:36], mode=WORKBENCH_START, duration=0:00:07.980, duration_ms=7980, data={}
+timestamp=[2023-11-22 15:08:37], mode=WORKBENCH_UI_INIT, duration=0:00:00.777, duration_ms=777, data={editors_count=2, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-12-05 10:30:50], mode=WORKBENCH_START, duration=0:00:11.060, duration_ms=11060, data={}
+timestamp=[2023-12-05 10:30:51], mode=WORKBENCH_UI_INIT, duration=0:00:00.806, duration_ms=806, data={editors_count=2, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2023-12-05 10:32:49], mode=PLATFORM_GENERATION, duration=0:00:01.430, duration_ms=1430, data={name=zed_9361_tcp}
+timestamp=[2023-12-05 12:15:32], mode=PLATFORM_GENERATION, duration=0:00:01.703, duration_ms=1703, data={name=zed_9361_tcp}
+timestamp=[2024-01-18 16:44:45], mode=WORKBENCH_START, duration=0:00:09.597, duration_ms=9597, data={}
+timestamp=[2024-01-18 16:44:46], mode=WORKBENCH_UI_INIT, duration=0:00:00.821, duration_ms=821, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2024-01-18 16:55:06], mode=PLATFORM_GENERATION, duration=0:00:03.087, duration_ms=3087, data={name=zed_9361_tcp}
+timestamp=[2024-01-19 10:40:44], mode=WORKBENCH_START, duration=0:00:09.879, duration_ms=9879, data={}
+timestamp=[2024-01-19 10:40:45], mode=WORKBENCH_UI_INIT, duration=0:00:00.750, duration_ms=750, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2024-01-22 16:18:20], mode=WORKBENCH_START, duration=0:00:09.932, duration_ms=9932, data={}
+timestamp=[2024-01-22 16:18:21], mode=WORKBENCH_UI_INIT, duration=0:00:00.717, duration_ms=717, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2024-01-23 09:54:19], mode=WORKBENCH_START, duration=0:00:10.216, duration_ms=10216, data={}
+timestamp=[2024-01-23 09:54:20], mode=WORKBENCH_UI_INIT, duration=0:00:00.896, duration_ms=896, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2024-01-23 09:58:31], mode=PLATFORM_GENERATION, duration=0:00:30.435, duration_ms=30435, data={name=zed_9361_tcp}
+timestamp=[2024-01-23 10:05:34], mode=PLATFORM_GENERATION, duration=0:00:01.380, duration_ms=1380, data={name=zed_9361_tcp}
+timestamp=[2024-01-23 10:39:14], mode=WORKBENCH_START, duration=0:00:09.215, duration_ms=9215, data={}
+timestamp=[2024-01-23 10:39:15], mode=WORKBENCH_UI_INIT, duration=0:00:00.975, duration_ms=975, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2024-01-23 10:41:21], mode=PLATFORM_GENERATION, duration=0:00:01.489, duration_ms=1489, data={name=zed_9361_tcp}
+timestamp=[2025-05-27 09:44:09], mode=WORKBENCH_START, duration=0:00:27.258, duration_ms=27258, data={}
+timestamp=[2025-05-27 09:44:10], mode=WORKBENCH_UI_INIT, duration=0:00:01.063, duration_ms=1063, data={editors_count=4, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-05-27 10:44:49], mode=WORKBENCH_START, duration=0:00:09.707, duration_ms=9707, data={}
+timestamp=[2025-05-27 10:44:50], mode=WORKBENCH_UI_INIT, duration=0:00:00.909, duration_ms=909, data={editors_count=6, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-02 10:01:31], mode=WORKBENCH_START, duration=0:00:10.750, duration_ms=10750, data={}
+timestamp=[2025-06-02 10:01:32], mode=WORKBENCH_UI_INIT, duration=0:00:00.856, duration_ms=856, data={editors_count=7, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-05 14:31:15], mode=WORKBENCH_START, duration=0:00:13.392, duration_ms=13392, data={}
+timestamp=[2025-06-05 14:31:16], mode=WORKBENCH_UI_INIT, duration=0:00:00.836, duration_ms=836, data={editors_count=7, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-05 15:13:49], mode=WORKBENCH_START, duration=0:00:08.650, duration_ms=8650, data={}
+timestamp=[2025-06-05 15:13:50], mode=WORKBENCH_UI_INIT, duration=0:00:01.128, duration_ms=1128, data={editors_count=8, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-05 15:31:51], mode=PLATFORM_GENERATION, duration=0:00:37.332, duration_ms=37332, data={name=zed_9361_tcp}
+timestamp=[2025-06-09 16:28:32], mode=WORKBENCH_START, duration=0:00:09.234, duration_ms=9234, data={}
+timestamp=[2025-06-09 16:28:33], mode=WORKBENCH_UI_INIT, duration=0:00:00.878, duration_ms=878, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-09 19:41:52], mode=WORKBENCH_START, duration=0:00:09.182, duration_ms=9182, data={}
+timestamp=[2025-06-09 19:41:53], mode=WORKBENCH_UI_INIT, duration=0:00:00.847, duration_ms=847, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-09 20:51:08], mode=WORKBENCH_START, duration=0:00:09.433, duration_ms=9433, data={}
+timestamp=[2025-06-09 20:51:09], mode=WORKBENCH_UI_INIT, duration=0:00:00.790, duration_ms=790, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-09 21:21:04], mode=PLATFORM_GENERATION, duration=0:00:32.843, duration_ms=32843, data={name=zed_9361_tcp}
+timestamp=[2025-06-10 19:35:17], mode=WORKBENCH_START, duration=0:00:08.367, duration_ms=8367, data={}
+timestamp=[2025-06-10 19:35:18], mode=WORKBENCH_UI_INIT, duration=0:00:00.884, duration_ms=884, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-10 21:43:39], mode=WORKBENCH_START, duration=0:00:08.268, duration_ms=8268, data={}
+timestamp=[2025-06-10 21:43:40], mode=WORKBENCH_UI_INIT, duration=0:00:00.951, duration_ms=951, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-11 16:06:29], mode=WORKBENCH_START, duration=0:00:15.381, duration_ms=15381, data={}
+timestamp=[2025-06-11 16:06:30], mode=WORKBENCH_UI_INIT, duration=0:00:01.150, duration_ms=1150, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-11 19:33:01], mode=WORKBENCH_START, duration=0:00:12.642, duration_ms=12642, data={}
+timestamp=[2025-06-11 19:33:02], mode=WORKBENCH_UI_INIT, duration=0:00:01.171, duration_ms=1171, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-12 15:02:22], mode=WORKBENCH_START, duration=0:00:13.667, duration_ms=13667, data={}
+timestamp=[2025-06-12 15:02:23], mode=WORKBENCH_UI_INIT, duration=0:00:01.015, duration_ms=1015, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-12 15:30:50], mode=WORKBENCH_START, duration=0:00:08.589, duration_ms=8589, data={}
+timestamp=[2025-06-12 15:30:51], mode=WORKBENCH_UI_INIT, duration=0:00:01.081, duration_ms=1081, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-12 15:35:09], mode=PLATFORM_GENERATION, duration=0:00:27.271, duration_ms=27271, data={name=zed_9361_tcp}
+timestamp=[2025-06-12 16:18:07], mode=WORKBENCH_START, duration=0:00:07.483, duration_ms=7483, data={}
+timestamp=[2025-06-12 16:18:08], mode=WORKBENCH_UI_INIT, duration=0:00:00.863, duration_ms=863, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-06-14 15:22:14], mode=WORKBENCH_START, duration=0:00:12.364, duration_ms=12364, data={}
+timestamp=[2025-06-14 15:22:15], mode=WORKBENCH_UI_INIT, duration=0:00:01.062, duration_ms=1062, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-07-01 17:17:28], mode=WORKBENCH_START, duration=0:00:10.591, duration_ms=10591, data={}
+timestamp=[2025-07-01 17:17:29], mode=WORKBENCH_UI_INIT, duration=0:00:00.964, duration_ms=964, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-07-04 20:55:40], mode=WORKBENCH_START, duration=0:00:11.771, duration_ms=11771, data={}
+timestamp=[2025-07-04 20:55:41], mode=WORKBENCH_UI_INIT, duration=0:00:01.053, duration_ms=1053, data={editors_count=16, platform_editors_count=4, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,tcp_9361,tcp_9361_system,zed_9361_tcp}
+timestamp=[2025-07-04 22:01:15], mode=PLATFORM_GENERATION, duration=0:01:08.531, duration_ms=68531, data={name=zed_9361_tcp}

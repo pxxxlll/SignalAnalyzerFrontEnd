@@ -1,0 +1,440 @@
+/***************************************************************************//**
+ *   @file   main.c
+ *   @brief  Implementation of Main Function.
+ *   @author DBogdan (dragos.bogdan@analog.com)
+********************************************************************************
+ * Copyright 2013(c) Analog Devices, Inc.
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *  - Neither the name of Analog Devices, Inc. nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *  - The use of this software may or may not infringe the patent rights
+ *    of one or more patent holders.  This license does not release you
+ *    from the requirement that you obtain separate licenses from these
+ *    patent holders to use this software.
+ *  - Use of the software either in source or binary form, must be run
+ *    on or directly connected to an Analog Devices Inc. component.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ANALOG DEVICES "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, NON-INFRINGEMENT,
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL ANALOG DEVICES BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, INTELLECTUAL PROPERTY RIGHTS, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*******************************************************************************/
+
+/******************************************************************************/
+/***************************** Include Files **********************************/
+/******************************************************************************/
+#include "config.h"
+#include "ad9361_api.h"
+#include "parameters.h"
+#include "platform.h"
+#include "axi_lite.h"
+#include "radio_set.h"
+#include "xtime_l.h"
+
+#include <stdio.h>
+#include "xparameters.h"
+#include "netif/xadapter.h"
+#include "platform.h"
+#include "platform_config.h"
+#include "lwipopts.h"
+#include "xil_printf.h"
+#include "sleep.h"
+#include "lwip/priv/tcp_priv.h"
+#include "lwip/init.h"
+#include "lwip/inet.h"
+#include "pl_intr.h"
+#include "sys_intr.h"
+
+#include "freq_sweep.h"
+
+
+#ifdef CONSOLE_COMMANDS
+#include "command.h"
+#include "console.h"
+#endif
+#ifdef XILINX_PLATFORM
+#include <xil_cache.h>
+#endif
+#if defined XILINX_PLATFORM || defined LINUX_PLATFORM || defined ALTERA_PLATFORM
+//#include "adc_core.h"
+//#include "dac_core.h"
+#endif
+
+#if LWIP_IPV6==1
+#include "lwip/ip6_addr.h"
+#include "lwip/ip6.h"
+#else
+
+#if LWIP_DHCP==1
+#include "lwip/dhcp.h"
+extern volatile int dhcp_timoutcntr;
+#endif
+
+#define DEFAULT_IP_ADDRESS	"192.168.137.10"
+#define DEFAULT_IP_MASK		"255.255.255.0"
+#define DEFAULT_GW_ADDRESS	"192.168.1.1"
+#endif /* LWIP_IPV6 */
+
+extern struct tcp_pcb *request_pcb;
+extern volatile u8  client_connected;
+extern u8 tcp_trans_start;
+extern u8 first_trans_start;
+
+extern volatile int TcpFastTmrFlag;
+extern volatile int TcpSlowTmrFlag;
+extern XScuGic Intc; //GIC
+
+void platform_enable_interrupts(void);
+void start_application(void);
+void transfer_data(void);
+void print_app_header(void);
+
+#if defined (__arm__) && !defined (ARMR5)
+#if XPAR_GIGE_PCS_PMA_SGMII_CORE_PRESENT == 1 || \
+		 XPAR_GIGE_PCS_PMA_1000BASEX_CORE_PRESENT == 1
+int ProgramSi5324(void);
+int ProgramSfpPhy(void);
+#endif
+#endif
+
+#ifdef XPS_BOARD_ZCU102
+#ifdef XPAR_XIICPS_0_DEVICE_ID
+int IicPhyReset(void);
+#endif
+#endif
+
+struct netif server_netif;
+
+#if LWIP_IPV6==1
+static void print_ipv6(char *msg, ip_addr_t *ip)
+{
+	print(msg);
+	xil_printf(" %s\n\r", inet6_ntoa(*ip));
+}
+#else
+static void print_ip(char *msg, ip_addr_t *ip)
+{
+	print(msg);
+	xil_printf("%d.%d.%d.%d\r\n", ip4_addr1(ip), ip4_addr2(ip),
+			ip4_addr3(ip), ip4_addr4(ip));
+}
+
+static void print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw)
+{
+	print_ip("Board IP:       ", ip);
+	print_ip("Netmask :       ", mask);
+	print_ip("Gateway :       ", gw);
+}
+
+static void assign_default_ip(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw)
+{
+	int err;
+
+	xil_printf("Configuring default IP %s \r\n", DEFAULT_IP_ADDRESS);
+
+	err = inet_aton(DEFAULT_IP_ADDRESS, ip);
+	if (!err)
+		xil_printf("Invalid default IP address: %d\r\n", err);
+
+	err = inet_aton(DEFAULT_IP_MASK, mask);
+	if (!err)
+		xil_printf("Invalid default IP MASK: %d\r\n", err);
+
+	err = inet_aton(DEFAULT_GW_ADDRESS, gw);
+	if (!err)
+		xil_printf("Invalid default gateway address: %d\r\n", err);
+}
+#endif /* LWIP_IPV6 */
+
+void init_intr_sys(void)
+{
+
+	Init_Intr_System(&Intc); // initial DMA interrupt system
+	pl_intr_init(&Intc);
+	init_platform();
+	Setup_Intr_Exception(&Intc);
+}
+
+/******************************************************************************/
+/************************ Variables Definitions *******************************/
+/******************************************************************************/
+#ifdef CONSOLE_COMMANDS
+extern command	  	cmd_list[];
+extern char			cmd_no;
+extern cmd_function	cmd_functions[11];
+unsigned char		cmd				 =  0;
+double				param[5]		 = {0, 0, 0, 0, 0};
+char				param_no		 =  0;
+int					cmd_type		 = -1;
+char				invalid_cmd		 =  0;
+char				received_cmd[30] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+										0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+										0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+#endif
+
+void gpio_initial(){
+	gpio_direction(GPIO_TRX_SW     ,1);
+	gpio_direction(GPIO_FDD_TDD_SEL,1);
+	gpio_direction(GPIO_TXNRX_PIN  ,1);
+	gpio_direction(GPIO_ENABLE_PIN ,1);
+	gpio_direction(GPIO_RESET_PIN  ,1);
+	gpio_direction(GPIO_SYNC_PIN   ,1);
+	gpio_direction(GPIO_EN_AGC     ,1);
+	gpio_direction(GPIO_CTL0_PIN   ,1);
+	gpio_direction(GPIO_CTL1_PIN   ,1);
+	gpio_direction(GPIO_CTL2_PIN   ,1);
+	gpio_direction(GPIO_CTL3_PIN   ,1);
+	gpio_direction(GPIO_LEDR_TRX2  ,1);
+	gpio_direction(GPIO_LEDG_TRX2  ,1);
+	gpio_direction(GPIO_LEDB_TRX2  ,1);
+	gpio_direction(GPIO_LEDR_TRX1  ,1);
+	gpio_direction(GPIO_LEDG_TRX1  ,1);
+	gpio_direction(GPIO_LEDB_TRX1  ,1);
+	gpio_direction(GPIO_DAC_R1_MODE,1);
+	gpio_direction(GPIO_ADC_R1_MODE,1);
+	gpio_direction(GPIO_DATA_CLK_CE,1);
+	gpio_direction(GPIO_DDS_EN,1);
+
+	gpio_set_value(GPIO_TRX_SW     ,1);
+	gpio_set_value(GPIO_FDD_TDD_SEL,1);
+	gpio_set_value(GPIO_TXNRX_PIN  ,1);
+	gpio_set_value(GPIO_ENABLE_PIN ,0);
+	gpio_set_value(GPIO_RESET_PIN  ,1);
+	gpio_set_value(GPIO_SYNC_PIN   ,1);
+	gpio_set_value(GPIO_EN_AGC     ,0);
+	gpio_set_value(GPIO_CTL0_PIN   ,0);
+	gpio_set_value(GPIO_CTL1_PIN   ,0);
+	gpio_set_value(GPIO_CTL2_PIN   ,0);
+	gpio_set_value(GPIO_CTL3_PIN   ,0);
+	gpio_set_value(GPIO_LEDR_TRX1  ,1);
+	gpio_set_value(GPIO_LEDG_TRX1  ,0);
+	gpio_set_value(GPIO_LEDB_TRX1  ,1);
+	gpio_set_value(GPIO_LEDR_TRX2  ,0);
+	gpio_set_value(GPIO_LEDG_TRX2  ,1);
+	gpio_set_value(GPIO_LEDB_TRX2  ,0);
+	gpio_set_value(GPIO_DAC_R1_MODE  ,1);
+	gpio_set_value(GPIO_ADC_R1_MODE  ,1);
+	gpio_set_value(GPIO_DATA_CLK_CE  ,0);
+	gpio_set_value(GPIO_DDS_EN  ,0);
+}
+
+
+
+
+
+uint64_t sweep_freq = FREQ_START;
+
+/***************************************************************************//**
+ * @brief main
+*******************************************************************************/
+int main(void)
+{
+	struct netif *netif;
+
+	/* the mac address of the board. this should be unique per board */
+	unsigned char mac_ethernet_address[] = {
+		0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
+
+	netif = &server_netif;
+#if defined (__arm__) && !defined (ARMR5)
+#if XPAR_GIGE_PCS_PMA_SGMII_CORE_PRESENT == 1 || \
+		XPAR_GIGE_PCS_PMA_1000BASEX_CORE_PRESENT == 1
+	ProgramSi5324();
+	ProgramSfpPhy();
+#endif
+#endif
+
+	/* Define this board specific macro in order perform PHY reset
+	 * on ZCU102
+	 */
+#ifdef XPS_BOARD_ZCU102
+	IicPhyReset();
+#endif
+
+#ifdef XILINX_PLATFORM
+	Xil_ICacheEnable();
+	Xil_DCacheEnable();
+#endif
+//ad936x resetpin
+default_init_param.gpio_resetb = GPIO_RESET_PIN;
+default_init_param.gpio_sync=-1;
+default_init_param.gpio_cal_sw1=-1;
+default_init_param.gpio_cal_sw2=-1;
+
+gpio_init(GPIO_DEVICE_ID);
+gpio_direction(default_init_param.gpio_resetb, 1);
+
+//spi dev initial
+spi_init(SPI_DEVICE_ID, 1, 0);
+
+//initial ad936x
+ad9361_init(&ad9361_phy, &default_init_param);
+//set fir param
+ad9361_set_tx_fir_config(ad9361_phy, tx_fir_config);
+ad9361_set_rx_fir_config(ad9361_phy, rx_fir_config);
+ad9361_set_tx_fir_en_dis(ad9361_phy, 1);
+ad9361_set_rx_fir_en_dis(ad9361_phy, 1);
+//set sample rate
+ad9361_set_tx_sampling_freq(ad9361_phy, sample_rate);
+ad9361_set_rx_sampling_freq(ad9361_phy, sample_rate);
+//set lo
+ad9361_set_tx_lo_freq(ad9361_phy, tx_lo_freq);
+ad9361_set_rx_lo_freq(ad9361_phy, rx_lo_freq);
+//set bandwidth
+ad9361_set_tx_rf_bandwidth(ad9361_phy, bandwidth);
+ad9361_set_rx_rf_bandwidth(ad9361_phy, bandwidth);
+//set rx channel gain
+ad9361_set_rx_rf_gain(ad9361_phy, 0, gain);
+ad9361_set_rx_rf_gain(ad9361_phy, 1, gain);
+//set tx att
+ad9361_set_tx_attenuation(ad9361_phy, 0, txatt);
+ad9361_set_tx_attenuation(ad9361_phy, 1, txatt);
+//read 936x chip id
+val = ad9361_spi_read(ad9361_phy->spi, regr);
+printf("ad9361_phy,REG_PRODUCT_ID=%d\n\r",val);
+
+//bist test mode
+//ad9361_spi_write(ad9361_phy->spi, 0x3f4, 0x03);//tx tone
+//ad9361_spi_write(ad9361_phy->spi, 0x3f5, 0x01);//no rf loop
+//ad9361_spi_write(ad9361_phy->spi, 0x3f6, 0x00);
+
+//initial emio pin
+gpio_initial();
+
+
+//idly_en idly_d phase clock_ce dds_en
+AXI_REG_WRITE(idly_en, 0x7f);
+AXI_REG_WRITE(idly_d, 8);
+AXI_REG_WRITE(phase, 128);
+gpio_set_value(GPIO_DATA_CLK_CE, 1);
+gpio_set_value(GPIO_DDS_EN, 1);
+
+printf("initial done.\n\r");
+
+init_intr_sys();
+
+xil_printf("\r\n\r\n");
+xil_printf("-----lwIP RAW Mode TCP Client Application-----\r\n");
+
+/* initialize lwIP */
+lwip_init();
+
+/* Add network interface to the netif_list, and set it as default */
+if (!xemac_add(netif, NULL, NULL, NULL, mac_ethernet_address,
+			PLATFORM_EMAC_BASEADDR)) {
+	xil_printf("Error adding N/W interface\r\n");
+	return -1;
+}
+
+#if LWIP_IPV6==1
+	netif->ip6_autoconfig_enabled = 1;
+	netif_create_ip6_linklocal_address(netif, 1);
+	netif_ip6_addr_set_state(netif, 0, IP6_ADDR_VALID);
+	print_ipv6("\n\rlink local IPv6 address is:",&netif->ip6_addr[0]);
+#endif /* LWIP_IPV6 */
+	netif_set_default(netif);
+
+	/* now enable interrupts */
+	platform_enable_interrupts();
+
+	/* specify that the network if is up */
+	netif_set_up(netif);
+
+#if (LWIP_IPV6==0)
+#if (LWIP_DHCP==1)
+	/* Create a new DHCP client for this interface.
+	 * Note: you must call dhcp_fine_tmr() and dhcp_coarse_tmr() at
+	 * the predefined regular intervals after starting the client.
+	 */
+	dhcp_start(netif);
+	dhcp_timoutcntr = 24;
+	while (((netif->ip_addr.addr) == 0) && (dhcp_timoutcntr > 0))
+		xemacif_input(netif);
+
+	if (dhcp_timoutcntr <= 0) {
+		if ((netif->ip_addr.addr) == 0) {
+			xil_printf("ERROR: DHCP request timed out\r\n");
+			assign_default_ip(&(netif->ip_addr),
+					&(netif->netmask), &(netif->gw));
+		}
+	}
+
+	/* print IP address, netmask and gateway */
+#else
+	assign_default_ip(&(netif->ip_addr), &(netif->netmask), &(netif->gw));
+#endif
+	print_ip_settings(&(netif->ip_addr), &(netif->netmask), &(netif->gw));
+#endif /* LWIP_IPV6 */
+	xil_printf("\r\n");
+
+	/* print app header */
+	print_app_header();
+
+	/* start the application*/
+	start_application();
+	xil_printf("\r\n");
+
+	while (1) {
+
+		if (TcpFastTmrFlag) {
+			if(request_pcb->state == CLOSED || (request_pcb->state == SYN_SENT && request_pcb->nrtx == TCP_SYNMAXRTX))//check conditions for create new tcp connection
+			{
+
+				xil_printf("TCP connection is closed, create new TCP connection\r\n");
+				start_application();
+			}		
+			tcp_fasttmr();
+			TcpFastTmrFlag = 0;
+		}
+		if (TcpSlowTmrFlag) {
+			tcp_slowtmr();
+			TcpSlowTmrFlag = 0;
+		}
+		xemacif_input(netif);
+
+		/* if connected to the server, start receive data from PL through axidma, then transmit the data to the PC software by TCP*/
+		if(client_connected && tcp_trans_start)// if tcp connection is setup
+		{
+//			ad9361_set_rx_lo_freq(ad9361_phy, sweep_freq);
+//			adc_init();
+//			usleep(50000);
+//			if(sweep_freq > FREQ_END) {
+//				sweep_freq = FREQ_START;
+//			}
+//			sweep_freq += FREQ_STEP;
+//			xil_printf("Set TX LO to %1u Hz \r\n", sweep_freq);
+//			// usleep(20000);
+			transfer_data();//call send_received_data() function sent data from ddr
+		}
+		else
+		{
+			fdma_wr_set(0);
+			first_trans_start = 0;
+		}
+	}
+
+#ifdef XILINX_PLATFORM
+	Xil_DCacheDisable();
+	Xil_ICacheDisable();
+#endif
+
+
+	return 0;
+}

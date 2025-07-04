@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Thu Jan 18 13:51:14 2024
+# Process ID: 6468
+# Current directory: F:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/zed_9361_1107_1Msys/zed_9361.runs/mult_18x18_synth_1
+# Command line: vivado.exe -log mult_18x18.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mult_18x18.tcl
+# Log file: F:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/zed_9361_1107_1Msys/zed_9361.runs/mult_18x18_synth_1/mult_18x18.vds
+# Journal file: F:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/zed_9361_1107_1Msys/zed_9361.runs/mult_18x18_synth_1\vivado.jou
+#-----------------------------------------------------------
+source mult_18x18.tcl -notrace

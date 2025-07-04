@@ -1,0 +1,43 @@
+2025-06-09T15:58:58.990315600255-15:58:58 **** Incremental Build of configuration Debug for project tcp_9361 ****
+000-make all 
+000-make --no-print-directory pre-build
+000-a9-linaro-pre-build-step
+000-' '
+000-make --no-print-directory main-build
+000-'Building file: ../src/main.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IF:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+000-In file included from ../src/main.c:49:
+000/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h85-1-1#pragma message: For the sleep routines, Global timer is being used0-F:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h:85:9: note: #pragma message: For the sleep routines, Global timer is being used
+000- #pragma message ("For the sleep routines, Global timer is being used")
+000-         ^~~~~~~
+000-../src/main.c: In function 'init_intr_sys':
+000/tcp_9361/src/main.c171-1-1implicit declaration of function 'init_platform'; did you mean 'inet_aton'? [-Wimplicit-function-declaration]1-../src/main.c:171:2: warning: implicit declaration of function 'init_platform'; did you mean 'inet_aton'? [-Wimplicit-function-declaration]
+000-  init_platform();
+000-  ^~~~~~~~~~~~~
+000-  inet_aton
+000-../src/main.c: In function 'main':
+000/tcp_9361/src/main.c311-1-1format '%d' expects argument of type 'int', but argument 2 has type 'int32_t' {aka 'long int'} [-Wformat=]1-../src/main.c:311:36: warning: format '%d' expects argument of type 'int', but argument 2 has type 'int32_t' {aka 'long int'} [-Wformat=]
+000- printf("ad9361_phy,REG_PRODUCT_ID=%d\n\r",val);
+000-                                   ~^      ~~~
+000-                                   %ld
+000/tcp_9361/src/main.c428-1-1implicit declaration of function 'fdma_wr_set'; did you mean 'ip_addr_set'? [-Wimplicit-function-declaration]1-../src/main.c:428:4: warning: implicit declaration of function 'fdma_wr_set'; did you mean 'ip_addr_set'? [-Wimplicit-function-declaration]
+000-    fdma_wr_set(0);
+000-    ^~~~~~~~~~~
+000-    ip_addr_set
+000-'Finished building: ../src/main.c'
+000-' '
+000-'Building target: tcp_9361.elf'
+000-'Invoking: ARM v7 gcc linker'
+000-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LF:/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bsplib/lib -o "tcp_9361.elf"  ./src/ad9361.o ./src/ad9361_api.o ./src/ad9361_conv.o ./src/axi_lite.o ./src/i2c_access.o ./src/iic_phyreset.o ./src/main.o ./src/pl_intr.o ./src/platform.o ./src/platform_zynq.o ./src/sccb_iic.o ./src/sfp.o ./src/si5324.o ./src/sys_intr.o ./src/tcp_client.o ./src/util.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+000-'Finished building target: tcp_9361.elf'
+000-' '
+000-'Invoking: ARM v7 Print Size'
+000-arm-none-eabi-size tcp_9361.elf  |tee "tcp_9361.elf.size"
+000-   text	   data	    bss	    dec	    hex	filename
+000- 295800	   4920	9558320	9859040	 966fe0	tcp_9361.elf
+000-'Finished building: tcp_9361.elf.size'
+000-' '
+00255-
+15:59:00 Build Finished (took 1s.29ms)
+

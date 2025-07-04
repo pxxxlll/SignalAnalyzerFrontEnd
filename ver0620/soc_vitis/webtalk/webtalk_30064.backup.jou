@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.2 (64-bit)
+# SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
+# 
+# Start of session at: Thu Jun 12 23:33:23 2025
+# Process ID: 30064
+# Current directory: D:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/webtalk
+# Command line: wbtcv.exe -mode batch -source vitis_webtalk.tcl
+# Log file: D:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/webtalk/webtalk.log
+# Journal file: D:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/webtalk\webtalk.jou
+#-----------------------------------------------------------
+source vitis_webtalk.tcl

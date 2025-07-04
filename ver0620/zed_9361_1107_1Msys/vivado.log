@@ -1,0 +1,419 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Tue Nov  7 15:33:55 2023
+# Process ID: 17344
+# Current directory: C:/projects/vivado20192/zed_9361_1107_1Msys
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent10776 C:\projects\vivado20192\zed_9361_1107_1Msys\zed_9361.xpr
+# Log file: C:/projects/vivado20192/zed_9361_1107_1Msys/vivado.log
+# Journal file: C:/projects/vivado20192/zed_9361_1107_1Msys\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.xpr
+INFO: [Project 1-313] Project file moved from 'C:/Users/56588/Desktop/ZED_AD9361_Sean_2019_2_067/ZED_AD9361_Sean_2019_2_066/soc_prj/soc_prj/zed_9361' since last save.
+Scanning sources...
+Finished scanning sources
+WARNING: [filemgmt 56-2] IP Repository Path: Could not find the directory 'C:/projects/ipdef', nor could it be found using path 'C:/Users/56588/Desktop/ZED_AD9361_Sean_2019_2_067/ZED_AD9361_Sean_2019_2_066/soc_prj/ipdef'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository 'c:/projects/ipdef'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.2/data/ip'.
+WARNING: [BD 41-1661] One or more IPs have been locked in the design 'design_1.bd'. Please run report_ip_status for more details and recommendations on how to fix this issue.
+List of locked IPs:
+design_1_uiFDMA_0_0
+design_1_uifdma_dbuf_0_0
+design_1_ad9361_if_idelay_0_0
+design_1_axi_lite_0_0
+
+open_project: Time (s): cpu = 00:00:17 ; elapsed = 00:00:10 . Memory (MB): peak = 1130.777 ; gain = 432.238
+update_compile_order -fileset sources_1
+reset_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 15:34:35 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+export_ip_user_files -of_objects  [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/new/prbs23.v] -no_script -reset -force -quiet
+remove_files  C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/new/prbs23.v
+export_ip_user_files -of_objects  [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/new/qpsk.v] -no_script -reset -force -quiet
+remove_files  C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/new/qpsk.v
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 15:38:36 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 15:47:35 2023] Launched synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1/runme.log
+[Tue Nov  7 15:47:35 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+open_hw_manager
+connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:3042
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+****** Xilinx cs_server v2019.2.0
+  **** Build date : Nov 07 2019-13:28:22
+    ** Copyright 2017-2019 Xilinx, Inc. All Rights Reserved.
+
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210248783389
+open_hw_target: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 2518.195 ; gain = 719.629
+set_property PROGRAM.FILE {C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/system_wrapper.bit} [get_hw_devices xc7z020_1]
+set_property PROBES.FILE {C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/system_wrapper.ltx} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/system_wrapper.ltx} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-2302] Device xc7z020 (JTAG device index = 1) is programmed with a design that has 1 ILA core(s).
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+WARNING: Simulation object clk_20MHz was not found in the design.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 15:54:56
+set_property PARAM.FREQUENCY 7500000 [get_hw_targets localhost:3121/xilinx_tcf/Digilent/210248783389]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 15:55:20
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 15:55:20
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+write_hw_ila_data -csv_file {C:\projects\vivado20192\zed_9361_1107_1Msys\iladata.csv} hw_ila_data_1
+C:/projects/vivado20192/zed_9361_1107_1Msys/iladata.csv
+add_wave -into {hw_ila_data_1.wcfg} -radix hex { {clk_8MHz} }
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:19:37
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:19:37
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:19:49
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:19:49
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:20:04
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:20:04
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 16:22:32 2023] Launched synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1/runme.log
+[Tue Nov  7 16:22:32 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:32:12
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:32:12
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+save_wave_config {C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wcfg}
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:33:29
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:33:29
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+write_hw_ila_data -csv_file {C:\projects\vivado20192\zed_9361_1107_1Msys\iladata.csv} hw_ila_data_1
+C:/projects/vivado20192/zed_9361_1107_1Msys/iladata.csv
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:35:02
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:35:02
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:35:21
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:35:21
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 16:37:27 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210248783389
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210248783389
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+INFO: [Labtools 27-1435] Device xc7z020 (JTAG device index = 1) is not programmed (DONE status = 0).
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-2302] Device xc7z020 (JTAG device index = 1) is programmed with a design that has 1 ILA core(s).
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+add_wave -into {hw_ila_data_1.wcfg} -radix dec { {adc_data_i1} {adc_data_q1} {data_out_I} {data_out_Q} {div} {yi} {yq} }
+add_wave -into {hw_ila_data_1.wcfg} -radix hex { {adc_valid} {clk_4MHz} {data_out_valid} {fir_data_I} {fir_data_Q} {out_valid} }
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:40:55
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:40:55
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:41:29
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:41:29
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:41:35
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:41:35
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:41:41
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:41:41
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:41:46
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:41:46
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:41:57
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:41:57
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:42:25
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:42:25
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:42:32
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:42:32
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:42:36
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:42:36
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:43:44
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:43:44
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:43:47
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:43:47
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:43:55
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:43:55
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:44:19
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:44:19
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:44:33
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:44:33
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+write_hw_ila_data -csv_file -force {C:\projects\vivado20192\zed_9361_1107_1Msys\iladata.csv} hw_ila_data_1
+C:/projects/vivado20192/zed_9361_1107_1Msys/iladata.csv
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:55:19
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:55:19
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:55:22
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:55:22
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:55:32
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:55:32
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:55:58
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:55:58
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:56:15
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:56:15
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:56:32
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:56:32
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:56:51
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:56:51
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 16:57:03
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 16:57:03
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+write_hw_ila_data -csv_file -force {C:\projects\vivado20192\zed_9361_1107_1Msys\iladata.csv} hw_ila_data_1
+C:/projects/vivado20192/zed_9361_1107_1Msys/iladata.csv
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 17:04:53
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 17:04:53
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 17:04:57
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 17:04:57
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+WARNING: [IP_Flow 19-4067] Ignoring invalid widget type specified checkbox.Providing a default widget
+set_property -dict [list CONFIG.C_DATA_DEPTH {131072}] [get_ips ila_0]
+generate_target all [get_files  C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'ila_0'...
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'c:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0_ooc.xdc'
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'ila_0'...
+catch { config_ip_cache -export [get_ips -all ila_0] }
+export_ip_user_files -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -no_script -sync -force -quiet
+reset_run ila_0_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1
+
+launch_runs -jobs 8 ila_0_synth_1
+[Tue Nov  7 17:08:59 2023] Launched ila_0_synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1/runme.log
+export_simulation -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/sim_scripts -ip_user_files_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files -ipstatic_source_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/modelsim} {questa=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/questa} {riviera=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/riviera} {activehdl=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1
+
+reset_run ila_0_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 17:14:05 2023] Launched ila_0_synth_1, synth_1...
+Run output will be captured here:
+ila_0_synth_1: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1/runme.log
+synth_1: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1/runme.log
+[Tue Nov  7 17:14:05 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+WARNING: [IP_Flow 19-4067] Ignoring invalid widget type specified checkbox.Providing a default widget
+set_property -dict [list CONFIG.C_DATA_DEPTH {32768}] [get_ips ila_0]
+generate_target all [get_files  C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'ila_0'...
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'c:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0_ooc.xdc'
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'ila_0'...
+catch { config_ip_cache -export [get_ips -all ila_0] }
+export_ip_user_files -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -no_script -sync -force -quiet
+reset_run ila_0_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1
+
+launch_runs -jobs 8 ila_0_synth_1
+[Tue Nov  7 17:19:44 2023] Launched ila_0_synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1/runme.log
+export_simulation -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/sim_scripts -ip_user_files_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files -ipstatic_source_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/modelsim} {questa=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/questa} {riviera=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/riviera} {activehdl=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1
+
+WARNING: [IP_Flow 19-4067] Ignoring invalid widget type specified checkbox.Providing a default widget
+set_property -dict [list CONFIG.C_DATA_DEPTH {16384}] [get_ips ila_0]
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210248783389
+generate_target all [get_files  C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'ila_0'...
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'c:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0_ooc.xdc'
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'ila_0'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'ila_0'...
+catch { config_ip_cache -export [get_ips -all ila_0] }
+export_ip_user_files -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -no_script -sync -force -quiet
+reset_run ila_0_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1
+
+launch_runs -jobs 8 ila_0_synth_1
+[Tue Nov  7 17:23:45 2023] Launched ila_0_synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/ila_0_synth_1/runme.log
+export_simulation -of_objects [get_files C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/ila_0/ila_0.xci] -directory C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/sim_scripts -ip_user_files_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files -ipstatic_source_dir C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/modelsim} {questa=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/questa} {riviera=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/riviera} {activehdl=C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.srcs/sources_1/ip/fifo_generator_4/fifo_generator_4.xci' is already up-to-date
+[Tue Nov  7 17:28:40 2023] Launched synth_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/synth_1/runme.log
+[Tue Nov  7 17:28:40 2023] Launched impl_1...
+Run output will be captured here: C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.runs/impl_1/runme.log
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210248783389
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+INFO: [Labtools 27-1435] Device xc7z020 (JTAG device index = 1) is not programmed (DONE status = 0).
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-2302] Device xc7z020 (JTAG device index = 1) is programmed with a design that has 1 ILA core(s).
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 17:36:36
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 17:36:36
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 17:39:51
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 17:39:51
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2023-Nov-07 17:42:19
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"ila0_dg"}]]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2023-Nov-07 17:42:19
+INFO: [Labtools 27-3304] ILA Waveform data saved to file C:/projects/vivado20192/zed_9361_1107_1Msys/zed_9361.hw/backup/hw_ila_data_1.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
+write_hw_ila_data -csv_file -force {C:\projects\vivado20192\zed_9361_1107_1Msys\iladata.csv} hw_ila_data_1
+C:/projects/vivado20192/zed_9361_1107_1Msys/iladata.csv
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Nov  7 17:58:55 2023...

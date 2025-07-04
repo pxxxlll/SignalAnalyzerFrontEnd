@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Mon Aug 28 11:50:36 2023
+# Process ID: 16324
+# Current directory: D:/12_RFMU/RFMU_v0_5_3/soc_prj/zed_9361/zed_9361.runs/design_1_uiFDMA_0_0_synth_1
+# Command line: vivado.exe -log design_1_uiFDMA_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_uiFDMA_0_0.tcl
+# Log file: D:/12_RFMU/RFMU_v0_5_3/soc_prj/zed_9361/zed_9361.runs/design_1_uiFDMA_0_0_synth_1/design_1_uiFDMA_0_0.vds
+# Journal file: D:/12_RFMU/RFMU_v0_5_3/soc_prj/zed_9361/zed_9361.runs/design_1_uiFDMA_0_0_synth_1\vivado.jou
+#-----------------------------------------------------------
+source design_1_uiFDMA_0_0.tcl -notrace

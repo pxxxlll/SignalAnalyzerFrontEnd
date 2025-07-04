@@ -1,0 +1,82 @@
+#ifndef PROTOCAL_H
+#define PROTOCAL_H
+
+#define TCP_START_CMD       		0xAA55FFA0
+#define TCP_STOP_CMD         		0xAA55FFB1
+
+#define FDMA_DBUF_BASE_ADDR 		0x43C00000
+#define TCP_RXBUFFER_BASE_ADDR  	0x0f000000
+/* -----------------------------------
+ * fpga code uifdma_dbuf ip parameter settings to calculate address space
+ *
+ * Wbaseaddr=0x04000000 when WDsizebits=20 and Wbufszie is 3
+ * so each address space is 0x100000,
+ * BUFFER0_BASE=0x04000000
+ * BUFFER1_BASE=0x04100000
+ * BUFFER2_BASE=0x04200000
+ *
+ *maxbufsize = (WDataWith/8)WXStride*WYsize*Wbufdepth
+ *
+ * ------------------------------- */
+#define UIFDMA_DBUF_WBASEADDR 0x08000000
+#define UIFDMA_DBUF_BUFSIZE 0x800000
+
+#define RX_BUFFER0_BASE    (UIFDMA_DBUF_WBASEADDR +  UIFDMA_DBUF_BUFSIZE*0)
+#define RX_BUFFER1_BASE    (UIFDMA_DBUF_WBASEADDR +  UIFDMA_DBUF_BUFSIZE*1)
+#define RX_BUFFER2_BASE    (UIFDMA_DBUF_WBASEADDR +  UIFDMA_DBUF_BUFSIZE*2)
+
+
+#define HEADER_ID0          		0xAA55AA55
+#define HEADER_ID1          		0xAA55AA55
+#define HEADER_KSPS 	    		40000
+#define HEADER_RESOLUTION			16
+#define HEADER_CHANNLES_SIGNBIT   	0x21
+#define HEADER_LENGTH   			1024
+#define HEADER_SIZE         		16
+// #define TOTAL_PKG_SIZE              1024*16*64
+#define TOTAL_PKG_SIZE              1024
+#define TCP_PACKEG_SIZE 			1024
+
+#define TCP_SEND_TIMES			TOTAL_PKG_SIZE/TCP_PACKEG_SIZE
+#define TCP_SEND_LAST_SIZE      TOTAL_PKG_SIZE-(TCP_PACKEG_SIZE*TCP_SEND_TIMES)
+#define TCP_FIRST_SEND_SIZE     HEADER_SIZE + TCP_PACKEG_SIZE
+
+typedef struct packet_header
+{
+	u32 ID0;
+	u32 ID1;
+	u16 KSPS;
+	u8  Resolution;
+	u8  channels_signbit;
+	u16 length;
+	u16 fram_counter;
+}packet_header;
+
+
+typedef struct packet_data
+{
+	u16 ADC0;
+	u16 ADC1;
+	u16 ADC2;
+	u16 ADC3;
+	u16 ADC4;
+	u16 ADC5;
+	u16 ADC6;
+	u16 ADC7;
+}packet_data;
+
+typedef struct fdma_buf_st
+{
+	u8  record[64];//reg buffer
+	u8  circle_cnt;//how many buffer need to be done
+	u8  next;//last buffer need to be done
+	u8  pkg_done_cnt;
+	u16 fram_cnt;
+	u16 pkg_cnt;
+}fdma_buf_st;
+
+
+void fdma_wr_set(u32 set);
+
+#endif
+

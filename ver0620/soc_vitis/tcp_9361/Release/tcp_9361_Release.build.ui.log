@@ -1,0 +1,152 @@
+2025-07-04T22:01:17.895199400255-22:01:17 **** Build of configuration Release for project tcp_9361 ****
+000-make all 
+000-make --no-print-directory pre-build
+000-a9-linaro-pre-build-step
+000-' '
+000-make --no-print-directory main-build
+000-'Building file: ../src/axi_lite.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/axi_lite.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/axi_lite.d" -MT"src/axi_lite.o" -o "src/axi_lite.o" "../src/axi_lite.c"
+000-'Finished building: ../src/axi_lite.c'
+000-' '
+000-'Building file: ../src/i2c_access.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/i2c_access.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/i2c_access.d" -MT"src/i2c_access.o" -o "src/i2c_access.o" "../src/i2c_access.c"
+000-'Finished building: ../src/i2c_access.c'
+000-' '
+000-'Building file: ../src/iic_phyreset.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/iic_phyreset.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/iic_phyreset.d" -MT"src/iic_phyreset.o" -o "src/iic_phyreset.o" "../src/iic_phyreset.c"
+000-'Finished building: ../src/iic_phyreset.c'
+000-' '
+000-'Building file: ../src/main.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+000-In file included from ../src/main.c:49:
+000/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h85-1-1#pragma message: For the sleep routines, Global timer is being used0-D:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h:85:9: note: #pragma message: For the sleep routines, Global timer is being used
+000- #pragma message ("For the sleep routines, Global timer is being used")
+000-         ^~~~~~~
+000-../src/main.c: In function 'init_intr_sys':
+000/tcp_9361/src/main.c171-1-1implicit declaration of function 'init_platform'; did you mean 'inet_aton'? [-Wimplicit-function-declaration]1-../src/main.c:171:2: warning: implicit declaration of function 'init_platform'; did you mean 'inet_aton'? [-Wimplicit-function-declaration]
+000-  init_platform();
+000-  ^~~~~~~~~~~~~
+000-  inet_aton
+000-../src/main.c: In function 'main':
+000/tcp_9361/src/main.c311-1-1format '%d' expects argument of type 'int', but argument 2 has type 'int32_t' {aka 'long int'} [-Wformat=]1-../src/main.c:311:36: warning: format '%d' expects argument of type 'int', but argument 2 has type 'int32_t' {aka 'long int'} [-Wformat=]
+000- printf("ad9361_phy,REG_PRODUCT_ID=%d\n\r",val);
+000-                                   ~^      ~~~
+000-                                   %ld
+000/tcp_9361/src/main.c428-1-1implicit declaration of function 'fdma_wr_set'; did you mean 'ip_addr_set'? [-Wimplicit-function-declaration]1-../src/main.c:428:4: warning: implicit declaration of function 'fdma_wr_set'; did you mean 'ip_addr_set'? [-Wimplicit-function-declaration]
+000-    fdma_wr_set(0);
+000-    ^~~~~~~~~~~
+000-    ip_addr_set
+000-'Finished building: ../src/main.c'
+000-' '
+000-'Building file: ../src/pl_intr.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/pl_intr.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/pl_intr.d" -MT"src/pl_intr.o" -o "src/pl_intr.o" "../src/pl_intr.c"
+000-'Finished building: ../src/pl_intr.c'
+000-' '
+000-'Building file: ../src/platform.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+000-'Finished building: ../src/platform.c'
+000-' '
+000-'Building file: ../src/platform_zynq.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/platform_zynq.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/platform_zynq.d" -MT"src/platform_zynq.o" -o "src/platform_zynq.o" "../src/platform_zynq.c"
+000-In file included from ../src/platform_zynq.c:60:
+000/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h85-1-1#pragma message: For the sleep routines, Global timer is being used0-D:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include/xtime_l.h:85:9: note: #pragma message: For the sleep routines, Global timer is being used
+000- #pragma message ("For the sleep routines, Global timer is being used")
+000-         ^~~~~~~
+000-'Finished building: ../src/platform_zynq.c'
+000-' '
+000-'Building file: ../src/sccb_iic.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/sccb_iic.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/sccb_iic.d" -MT"src/sccb_iic.o" -o "src/sccb_iic.o" "../src/sccb_iic.c"
+000-'Finished building: ../src/sccb_iic.c'
+000-' '
+000-'Building file: ../src/sfp.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/sfp.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/sfp.d" -MT"src/sfp.o" -o "src/sfp.o" "../src/sfp.c"
+000-'Finished building: ../src/sfp.c'
+000-' '
+000-'Building file: ../src/si5324.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/si5324.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/si5324.d" -MT"src/si5324.o" -o "src/si5324.o" "../src/si5324.c"
+000-'Finished building: ../src/si5324.c'
+000-' '
+000-'Building file: ../src/sys_intr.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/sys_intr.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/sys_intr.d" -MT"src/sys_intr.o" -o "src/sys_intr.o" "../src/sys_intr.c"
+000-'Finished building: ../src/sys_intr.c'
+000-' '
+000-'Building file: ../src/tcp_client.c'
+000-'Invoking: ARM v7 gcc compiler'
+000-arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/tcp_client.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bspinclude/include -MMD -MP -MF"src/tcp_client.d" -MT"src/tcp_client.o" -o "src/tcp_client.o" "../src/tcp_client.c"
+000-../src/tcp_client.c: In function 'tcp_client_err':
+000/tcp_9361/src/tcp_client.c193-1-1implicit declaration of function 'get_time_ms'; did you mean 'getitimer'? [-Wimplicit-function-declaration]1-../src/tcp_client.c:193:14: warning: implicit declaration of function 'get_time_ms'; did you mean 'getitimer'? [-Wimplicit-function-declaration]
+000-  u64_t now = get_time_ms();
+000-              ^~~~~~~~~~~
+000-              getitimer
+000-../src/tcp_client.c: In function 'tcp_send_perf_traffic':
+000/tcp_9361/src/tcp_client.c221-1-1'return' with no value, in function returning non-void1-../src/tcp_client.c:221:2: warning: 'return' with no value, in function returning non-void
+000-  return;
+000-  ^~~~~~
+000/tcp_9361/src/tcp_client.c202-1-1declared here0-../src/tcp_client.c:202:14: note: declared here
+000- static err_t tcp_send_perf_traffic(void)
+000-              ^~~~~~~~~~~~~~~~~~~~~
+000/tcp_9361/src/tcp_client.c259-1-1implicit declaration of function 'Xil_DCacheInvalidateRange' [-Wimplicit-function-declaration]1-../src/tcp_client.c:259:5: warning: implicit declaration of function 'Xil_DCacheInvalidateRange' [-Wimplicit-function-declaration]
+000-     Xil_DCacheInvalidateRange((u32)bufaddr + HEADER_SIZE, TCP_FIRST_SEND_SIZE);
+000-     ^~~~~~~~~~~~~~~~~~~~~~~~~
+000/tcp_9361/src/tcp_client.c282-1-1'return' with no value, in function returning non-void1-../src/tcp_client.c:282:5: warning: 'return' with no value, in function returning non-void
+000-     return;
+000-     ^~~~~~
+000/tcp_9361/src/tcp_client.c202-1-1declared here0-../src/tcp_client.c:202:14: note: declared here
+000- static err_t tcp_send_perf_traffic(void)
+000-              ^~~~~~~~~~~~~~~~~~~~~
+000/tcp_9361/src/tcp_client.c287-1-1'return' with no value, in function returning non-void1-../src/tcp_client.c:287:5: warning: 'return' with no value, in function returning non-void
+000-     return;
+000-     ^~~~~~
+000/tcp_9361/src/tcp_client.c202-1-1declared here0-../src/tcp_client.c:202:14: note: declared here
+000- static err_t tcp_send_perf_traffic(void)
+000-              ^~~~~~~~~~~~~~~~~~~~~
+000/tcp_9361/src/tcp_client.c304-1-1implicit declaration of function 'usleep'; did you mean 'fseek'? [-Wimplicit-function-declaration]1-../src/tcp_client.c:304:5: warning: implicit declaration of function 'usleep'; did you mean 'fseek'? [-Wimplicit-function-declaration]
+000-     usleep(10000);
+000-     ^~~~~~
+000-     fseek
+000/tcp_9361/src/tcp_client.c310-1-1implicit declaration of function 'adc_init'; did you mean 'axiadc_init'? [-Wimplicit-function-declaration]1-../src/tcp_client.c:310:5: warning: implicit declaration of function 'adc_init'; did you mean 'axiadc_init'? [-Wimplicit-function-declaration]
+000-     adc_init();
+000-     ^~~~~~~~
+000-     axiadc_init
+000-../src/tcp_client.c: At top level:
+000/tcp_9361/src/tcp_client.c472-1-1conflicting types for 'adc_init'1adc_init../src/tcp_client.c:472:6: warning: conflicting types for 'adc_init'
+000- void adc_init(void)
+000-      ^~~~~~~~
+000/tcp_9361/src/tcp_client.c310-1-1previous implicit declaration of 'adc_init' was here0-../src/tcp_client.c:310:5: note: previous implicit declaration of 'adc_init' was here
+000-     adc_init();
+000-     ^~~~~~~~
+000-../src/tcp_client.c: In function 'start_application':
+000/tcp_9361/src/tcp_client.c495-1-1unused variable 'i' [-Wunused-variable]1-../src/tcp_client.c:495:8: warning: unused variable 'i' [-Wunused-variable]
+000-  u32_t i;
+000-        ^
+000-../src/tcp_client.c: In function 'tcp_send_perf_traffic':
+000/tcp_9361/src/tcp_client.c281-1-1'err' may be used uninitialized in this function [-Wmaybe-uninitialized]1-../src/tcp_client.c:281:5: warning: 'err' may be used uninitialized in this function [-Wmaybe-uninitialized]
+000-     xil_printf("txperf: Error on tcp_write: %d\r\n", err);
+000-     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+000-'Finished building: ../src/tcp_client.c'
+000-' '
+000-'Building target: tcp_9361.elf'
+000-'Invoking: ARM v7 gcc linker'
+000-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LD:/Vivado_2019/Ming_Jian/16QAM/16M_16QAM/zed_9361_1107_1Msys/soc_vitis/zed_9361_tcp/export/zed_9361_tcp/sw/zed_9361_tcp/standalone_domain/bsplib/lib -o "tcp_9361.elf"  ./src/ad9361.o ./src/ad9361_api.o ./src/ad9361_conv.o ./src/axi_lite.o ./src/i2c_access.o ./src/iic_phyreset.o ./src/main.o ./src/pl_intr.o ./src/platform.o ./src/platform_zynq.o ./src/sccb_iic.o ./src/sfp.o ./src/si5324.o ./src/sys_intr.o ./src/tcp_client.o ./src/util.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+000-'Finished building target: tcp_9361.elf'
+000-' '
+000-'Invoking: ARM v7 Print Size'
+000-arm-none-eabi-size tcp_9361.elf  |tee "tcp_9361.elf.size"
+000-   text	   data	    bss	    dec	    hex	filename
+000- 252116	   4920	9558320	9815356	 95c53c	tcp_9361.elf
+000-'Finished building: tcp_9361.elf.size'
+000-' '
+00255-
+22:01:26 Build Finished (took 8s.438ms)
+
