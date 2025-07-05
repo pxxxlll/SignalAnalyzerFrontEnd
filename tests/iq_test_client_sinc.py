@@ -12,7 +12,7 @@ HOST = '127.0.0.1'
 PORT = 5000
 
 PKG_IQ_POINTS = 1024
-BYTES_PER_POINT = 16
+BYTES_PER_POINT = 2 
 PKG_PAYLOAD_SIZE = PKG_IQ_POINTS * BYTES_PER_POINT
 HEADER_SIZE = 16
 FRAME_PKGS = 64
@@ -24,6 +24,9 @@ HEADER_KSPS = 40000
 HEADER_RES = 16
 HEADER_SIGNBIT = 0x21
 HEADER_LENGTH = PKG_IQ_POINTS
+
+CMD_START = b'\xAA\x55\xFF\xA0'
+
 
 # ===== 信号参数 =====
 FREQ_BIN = 64             # 目标频率 bin（产生一个频谱峰）
@@ -48,6 +51,13 @@ frame_counter = 0
 
 try:
     while True:
+        try: 
+            cmd = sock.recv(1024)
+            if cmd[0:4] != CMD_START:
+                continue
+        except Exception as e:
+                logging.error("An error occured when receiving command: {e}")
+
         for pkg_idx in range(FRAME_PKGS):
             # ---- 构造 IQ 信号 ----
             i_samples = AMPLITUDE * envelope * np.cos(angle)

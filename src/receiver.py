@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QObject, pyqtSignal, QTimer
+from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot
 from PyQt5.QtNetwork import QTcpServer, QTcpSocket, QHostAddress
 import struct
 import logging
@@ -38,6 +38,7 @@ class DataReceiver(QObject):
         self.server.close()
         logger.info("Server stopped.")
 
+    @pyqtSlot()
     def on_new_connection(self):
         if self.client:
             self.client.close()
@@ -52,12 +53,14 @@ class DataReceiver(QObject):
         logger.info(f"Client connected from {self.client.peerAddress().toString()}")
         self.signal_client_connected.emit(True)
 
+    @pyqtSlot()
     def on_disconnected(self):
         logger.info("Client disconnected")
         self.signal_client_connected.emit(False)
         self.client.deleteLater()
         self.client = None
 
+    @pyqtSlot()
     def send_cmd(self, cmd: str):
         cmd_map = {
             "start": b'\xAA\x55\xFF\xA0',
@@ -75,6 +78,7 @@ class DataReceiver(QObject):
         self.client.write(cmd_map[cmd])
         logger.info(f"Sent command: {cmd.upper()}")
 
+    @pyqtSlot()
     def on_ready_read(self):
         self.buffer += self.client.readAll().data()
 
