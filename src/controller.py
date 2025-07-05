@@ -1,6 +1,6 @@
 # controller.py
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
-from receiver import DataReceiver
+from receiver_old import DataReceiver
 from buffer import BlockBuffer
 from processor import SignalProcessor
 from display import SpectrumDisplay
