@@ -18,7 +18,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("src/ui/analyzer.ui", self)  # 加载 .ui 文件（路径按你实际的来）
         self.setupUi(self)
 
         # 设置常量字典
