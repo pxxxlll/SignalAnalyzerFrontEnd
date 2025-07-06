@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1012</width>
+    <height>687</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>-1</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, sans-serif;
+    font-size: 14px;
+}
+
+
+QMainWindow, QWidget {
+    background-color: #1a1f2c; /* 深蓝黑底 */
+    color: #e0e0e0;            /* 浅灰字体 */
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, sans-serif;
+    font-size: 14px;
+}
+
+QLabel {
+    color: #e0e0e0;
+}
+
+QLineEdit, QTextEdit, QPlainTextEdit {
+    background-color: #2a3244;
+    border: 1px solid #3c4458;
+    border-radius: 4px;
+    padding: 4px;
+    color: #ffffff;
+    selection-background-color: #5c6a89;
+}
+
+QComboBox {
+    background-color: #2a3244;
+    border: 1px solid #3c4458;
+    border-radius: 4px;
+    padding: 4px;
+    color: #ffffff;
+    selection-background-color: #5c6a89;
+}
+
+QMenuBar, QMenu {
+    background-color: #202637;
+    color: #e0e0e0;
+}
+
+QMenu::item:selected {
+    background-color: #2e3a55;
+}
+
+QStatusBar {
+    background-color: #1a1f2c;
+    color: #a0a0a0;
+}
+
+QToolTip {
+    background-color: #2e3b55;
+    color: white;
+    border: 1px solid #5a6780;
+}
+
+
+/* blue metal */
+QPushButton {
+    color: white;
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #3a4a68,
+        stop: 0.5 #2e3b55,
+        stop: 1 #1d273a
+    );
+    border: 1px solid #0f1b2e;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    /*box-shadow: 0px 2px 5px rgba(0,0,0,0.6);*/
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #44597f,
+        stop: 0.5 #344765,
+        stop: 1 #1e2d44
+    );
+    border: 1px solid #2c3c5a;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #1e2a3d,
+        stop: 1 #0f1725
+    );
+    border: 1px solid #000000;
+    padding-top: 7px;  /* Pressed visual effect */
+    padding-bottom: 5px;
+}
+
+QPushButton:disabled {
+    background-color: #444a5a;
+    color: #999;
+    border: 1px solid #333;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="styleSheet">
+         <string notr="true">/* 整体容器背景 */
+QTabWidget::pane {
+    border: 1px solid #2e3b55;
+    background-color: #1a1f2c;
+    top: -1px;  /* 防止 border 被切断 */
+}
+
+/* 标签栏区域背景 */
+QTabBar {
+    background-color: #1a1f2c;
+}
+
+/* 普通标签样式 */
+QTabBar::tab {
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #3a4a68,
+        stop: 0.5 #2e3b55,
+        stop: 1 #1d273a
+    );
+    color: white;
+    border: 1px solid #0f1b2e;
+    border-bottom-color: #2e3b55; /* 合并边框 */
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 6px 12px;
+    min-width: 80px;
+}
+
+/* 选中的标签页 */
+QTabBar::tab:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #44597f,
+        stop: 0.5 #344765,
+        stop: 1 #1e2d44
+    );
+    border: 1px solid #3c4a64;
+    border-bottom: 1px solid #1a1f2c; /* 与内容区背景融合 */
+    font-weight: bold;
+}
+
+/* 鼠标悬停 */
+QTabBar::tab:hover {
+    background-color: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #4e6086,
+        stop: 1 #2e3a55
+    );
+}
+</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <attribute name="title">
+          <string>Tab 1</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout" stretch="3,0,2">
+            <item>
+             <widget class="PlotWidget" name="plt_spectrum" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>100</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 0, 0);</string>
+              </property>
+              <widget class="QLabel" name="label_2">
+               <property name="geometry">
+                <rect>
+                 <x>70</x>
+                 <y>10</y>
+                 <width>121</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>-1</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    color: yellow;
+    background-color: black;
+    border: 1px solid yellow;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>频谱</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="PlotWidget" name="Plot_3" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>100</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 0, 0);</string>
+              </property>
+              <widget class="QLabel" name="label_3">
+               <property name="geometry">
+                <rect>
+                 <x>70</x>
+                 <y>10</y>
+                 <width>121</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>-1</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    color: yellow;
+    background-color: black;
+    border: 1px solid yellow;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>传输散射系数</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <attribute name="title">
+          <string>Tab 2</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,1,0,1">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0">
+            <item>
+             <widget class="QPushButton" name="btn_conn">
+              <property name="styleSheet">
+               <string notr="true">
+</string>
+              </property>
+              <property name="text">
+               <string>连接 / 断开</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lbl_conn_light">
+              <property name="styleSheet">
+               <string notr="true">QLabel#lbl_conn_light {
+    background-color: #cccccc;       /* 默认：灰色（未连接） */
+    border: 2px solid #222;
+    border-radius: 10px;             /* 让其变成圆形 */
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lbl_conn_state">
+              <property name="text">
+               <string>未连接</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_start">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>开始运行</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_stop">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>停止运行</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_save">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>保存数据</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1012</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

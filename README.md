@@ -49,28 +49,6 @@ python tests/iq_test_client.py
 
 ---
 
-## 🔁 Qt Designer UI 集成方式
-
-* `.ui` 文件保存在 `src/ui/` 中
-* 使用 `build_ui.py` 自动将其转换为 Python 代码：
-
-```bash
-python build_ui.py
-```
-
-在主程序中以类继承形式集成 UI：
-
-```python
-from src.ui.main_window_ui import Ui_MainWindow
-
-class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-```
-
----
-
 ## 👥 协作者 Git 提交与协作流程
 
 本项目远程仓库：

@@ -12,7 +12,7 @@ logger.addHandler(ch)
 
 
 class SignalProcessor(QObject):
-    signal_fft_ready = pyqtSignal(np.ndarray)  # 发出处理后的频谱数据（幅度谱）
+    signal_fft_ready = pyqtSignal(np.ndarray, np.ndarray)  # 发出处理后的频谱数据（幅度谱）
 
     def __init__(self):
         super().__init__()
@@ -26,8 +26,8 @@ class SignalProcessor(QObject):
         self.thread = threading.Thread(target=self._process_loop, daemon=True)
         self.thread.start()
 
-    @pyqtSlot(bytes)
-    def process_frame(self, frame_bytes):
+    @pyqtSlot(float, bytes)
+    def process_frame(self, sample_freq, frame_bytes):
         """
         将原始 2048 字节帧转换为 IQ 数据并做 FFT，输出频谱（幅度谱）
         假设每个 I/Q 点 2 字节，交错排列
@@ -41,6 +41,7 @@ class SignalProcessor(QObject):
         fft_result = np.fft.fftshift(np.fft.fft(complex_iq))
 
         magnitude = 20 * np.log10(np.abs(fft_result) + 1e-6)  # dB 级别
+        freqs = np.linspace(-sample_freq / 2, sample_freq / 2, len(magnitude))
         logger.debug(f"mag_max = {max(magnitude)}, mag_min={min(magnitude)}")
 
-        self.signal_fft_ready.emit(magnitude)
+        self.signal_fft_ready.emit(freqs, magnitude)

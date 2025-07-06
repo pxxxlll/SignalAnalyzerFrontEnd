@@ -1,4 +1,3 @@
-# iq_test_client.py
 import socket
 import struct
 import numpy as np
@@ -26,85 +25,117 @@ HEADER_SIGNBIT = 0x21
 HEADER_LENGTH = PKG_IQ_POINTS
 
 CMD_START = b'\xAA\x55\xFF\xA0'
-
+CMD_STOP  = b'\xAA\x55\xFF\xB1'
 
 # ===== 信号参数 =====
-FREQ_BIN = 64             # 目标频率 bin（产生一个频谱峰）
-AMPLITUDE = 48            # 幅度 [-128, 127]，QAM16 一般为 ±48
-NOISE_LEVEL = 3           # 加性噪声强度（0~±N）
-VCLIENT_DEBUT = True     # 设置 True 以低速发送（调试用）
+FREQ_BIN = 64             # 目标频率 bin
+AMPLITUDE = 48            # 幅度 [-128, 127]
+NOISE_LEVEL = 3           # 噪声强度
+VCLIENT_DEBUT = True      # 慢速发送调试
 
-# ===== 构造 SINC-LIKE 包络 =====
+# ===== 预生成 IQ 波形（窗函数 + 包络）=====
 window = np.hamming(PKG_IQ_POINTS)
 n = np.arange(PKG_IQ_POINTS)
 angle = 2 * np.pi * FREQ_BIN * n / PKG_IQ_POINTS
-sinc_envelope = np.sinc((n - PKG_IQ_POINTS // 2) / 10)  # 控制主瓣宽度
-envelope = (sinc_envelope * window)
-envelope /= np.max(np.abs(envelope))  # 归一化
+sinc_envelope = np.sinc((n - PKG_IQ_POINTS // 2) / 10)
+envelope = sinc_envelope * window
+envelope /= np.max(np.abs(envelope))
 
-# ===== TCP连接 =====
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((HOST, PORT))
-logging.info(f"Connected to {HOST}:{PORT}")
-
-frame_counter = 0
-
-try:
+retry_cnt = 0
+def connect_to_server():
+    global retry_cnt
     while True:
-        try: 
-            cmd = sock.recv(1024)
-            if cmd[0:4] != CMD_START:
-                continue
-        except Exception as e:
-                logging.error("An error occured when receiving command: {e}")
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect((HOST, PORT))
+            logging.info(f"Connected to {HOST}:{PORT}")
+            return sock
+        except (ConnectionRefusedError, TimeoutError, OSError) as e:
+            logging.warning(f"Connection failed: {e}. Retrying in 2 seconds ({retry_cnt})...")
+            retry_cnt += 1
+            time.sleep(2)
 
-        for pkg_idx in range(FRAME_PKGS):
-            # ---- 构造 IQ 信号 ----
-            i_samples = AMPLITUDE * envelope * np.cos(angle)
-            q_samples = AMPLITUDE * envelope * np.sin(angle)
 
-            # ---- 加性噪声 ----
-            i_noise = np.random.randint(-NOISE_LEVEL, NOISE_LEVEL + 1, size=PKG_IQ_POINTS)
-            q_noise = np.random.randint(-NOISE_LEVEL, NOISE_LEVEL + 1, size=PKG_IQ_POINTS)
-            i_samples = np.clip(i_samples + i_noise, -128, 127).astype(np.int8)
-            q_samples = np.clip(q_samples + q_noise, -128, 127).astype(np.int8)
+def send_frame(sock, frame_counter):
+    for pkg_idx in range(FRAME_PKGS):
+        i_samples = AMPLITUDE * envelope * np.cos(angle)
+        q_samples = AMPLITUDE * envelope * np.sin(angle)
 
-            # ---- 打包 IQ ----
-            iq_interleaved = np.empty(PKG_IQ_POINTS * 2, dtype=np.int8)
-            iq_interleaved[0::2] = i_samples
-            iq_interleaved[1::2] = q_samples
+        i_noise = np.random.randint(-NOISE_LEVEL, NOISE_LEVEL + 1, size=PKG_IQ_POINTS)
+        q_noise = np.random.randint(-NOISE_LEVEL, NOISE_LEVEL + 1, size=PKG_IQ_POINTS)
+        i_samples = np.clip(i_samples + i_noise, -128, 127).astype(np.int8)
+        q_samples = np.clip(q_samples + q_noise, -128, 127).astype(np.int8)
 
-            # ---- 扩展 payload ----
-            payload = np.tile(iq_interleaved, BYTES_PER_POINT // 2)
-            assert len(payload) == PKG_PAYLOAD_SIZE
+        iq_interleaved = np.empty(PKG_IQ_POINTS * 2, dtype=np.int8)
+        iq_interleaved[0::2] = i_samples
+        iq_interleaved[1::2] = q_samples
 
-            # ---- 帧头 + payload ----
-            if pkg_idx == 0:
-                header = struct.pack(
-                    '<IIHHBHH',
-                    HEADER_ID0,
-                    HEADER_ID1,
-                    HEADER_KSPS,
-                    HEADER_RES,
-                    HEADER_SIGNBIT,
-                    HEADER_LENGTH,
-                    frame_counter
-                )
-                packet = header + payload.tobytes()
-            else:
-                packet = payload.tobytes()
+        payload = np.tile(iq_interleaved, BYTES_PER_POINT // 2)
+        assert len(payload) == PKG_PAYLOAD_SIZE
 
-            sock.sendall(packet)
-            if VCLIENT_DEBUT:
-                time.sleep(0.05)  # DEBUG: 慢速发送
+        if pkg_idx == 0:
+            header = struct.pack(
+                '<IIHHBHH',
+                HEADER_ID0,
+                HEADER_ID1,
+                HEADER_KSPS,
+                HEADER_RES,
+                HEADER_SIGNBIT,
+                HEADER_LENGTH,
+                frame_counter
+            )
+            packet = header + payload.tobytes()
+        else:
+            packet = payload.tobytes()
 
-        logging.info(f"Sent frame {frame_counter}")
-        frame_counter = (frame_counter + 1) % 65536
+        sock.sendall(packet)
+        if VCLIENT_DEBUT:
+            time.sleep(0.05)
+    logging.info(f"Sent frame {frame_counter}")
 
-except KeyboardInterrupt:
-    logging.info("Interrupted by user")
 
-finally:
-    sock.close()
-    logging.info("Socket closed")
+def main_loop():
+    frame_counter = 0
+    sock = connect_to_server()
+    sending = False
 
+    while True:
+        try:
+            sock.settimeout(0.1)  # 设置短超时避免永久阻塞
+            try:
+                cmd = sock.recv(1024)
+                if not cmd:
+                    raise ConnectionResetError("Socket closed by server")
+
+                if cmd.startswith(CMD_START):
+                    sending = True
+                    logging.info("Received START command")
+                elif cmd.startswith(CMD_STOP):
+                    sending = False
+                    logging.info("Received STOP command")
+            except socket.timeout:
+                pass  # 正常，表示无新命令
+
+            if sending:
+                try:
+                    send_frame(sock, frame_counter)
+                    frame_counter = (frame_counter + 1) % 65536
+                except (BrokenPipeError, ConnectionResetError, OSError) as e:
+                    logging.warning(f"Disconnected while sending: {e}")
+                    sock.close()
+                    sock = connect_to_server()
+                    sending = False  # 重新等待 START
+        except (BrokenPipeError, ConnectionResetError, OSError) as e:
+            logging.warning(f"Disconnected while listening: {e}")
+            sock.close()
+            sock = connect_to_server()
+            sending = False
+
+
+if __name__ == '__main__':
+    try:
+        main_loop()
+    except KeyboardInterrupt:
+        logging.info("Interrupted by user")
+    finally:
+        logging.info("Client exited")
