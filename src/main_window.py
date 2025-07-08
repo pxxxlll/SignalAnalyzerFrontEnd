@@ -5,6 +5,7 @@ from ui.analyzer import Ui_MainWindow
 import pyqtgraph as pg
 import sys
 import numpy as np
+from figure_manager import FigureManager  # 导入图像管理器
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -19,6 +20,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
 
         self.setupUi(self)
+        self.figures = FigureManager(self)  # 把 self 传进去以访问 ui 对象
+
 
         # 设置常量字典
         self.lbl_conn_state_texts = {
@@ -66,16 +69,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lbl_conn_state.setText(self.lbl_conn_state_texts[state]) # 更新文本
         self.set_lbl_conn_light_color(self.lbl_conn_light_colors[state]) # 更新颜色
         
-
-    def update_spectrum(self, freqs, values):
-        """
-        接口函数：更新频谱图。
-        :param freqs: ndarray, 频率轴
-        :param values: ndarray, 幅度（dB）
-        """
-        self.spectrum.setData(freqs, values)
-
-
     def set_lbl_conn_light_color(self, color_normalized):
         r = int(color_normalized[0] * 255)
         g = int(color_normalized[1] * 255)
@@ -94,6 +87,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.lbl_conn_light.setStyleSheet(style)
 
+    @pyqtSlot(np.ndarray, np.ndarray)
+    def update_spectrum(self, freqs: np.ndarray, values: np.ndarray):
+        self.figures.update_spectrum(freqs, values)
+
+    @pyqtSlot(np.ndarray)
+    def update_constellation(self, iq: np.ndarray): 
+        """
+        更新星座图。
+        :param iq: 复数数组，形状为 (N, )，表示 I/Q 数据
+        """
+        self.figures.update_constellation(iq)
+    
+    @pyqtSlot(np.ndarray, np.ndarray)
+    def update_iq(self, i_data: np.ndarray, q_data: np.ndarray):
+        """
+        更新 I/Q 图。
+        :param i_data: I 数据数组
+        :param q_data: Q 数据数组
+        """
+        self.figures.update_iq(i_data, q_data)
 
 # 运行窗口
 if __name__ == "__main__":
