@@ -106,7 +106,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param i_data: I 数据数组
         :param q_data: Q 数据数组
         """
+        logger.debug(f"Updating I/Q data: {len(i_data)} samples")
         self.figures.update_iq(i_data, q_data)
+
+    @pyqtSlot(np.ndarray, np.ndarray)
+    def update_sweep_spectrum(self, freqs: np.ndarray, values: np.ndarray):
+        """
+        更新扫频图。
+        :param freqs: 频率数组
+        :param values: 幅度数组
+        """
+        self.figures.update_sweep_spectrum(freqs, values)   
+
+    @pyqtSlot(np.ndarray, np.ndarray)
+    def update_s21(self, s21_x, s21_y):
+        """
+        更新 S21 图。
+        :param s21_x: 频率数组
+        :param s21_y: 幅度数组
+        """
+        self.figures.update_s21(s21_x, s21_y)
 
 # 运行窗口
 if __name__ == "__main__":

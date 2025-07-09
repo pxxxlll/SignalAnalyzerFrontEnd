@@ -1,7 +1,8 @@
 import numpy as np
-import threading
+# import threading
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 import logging
+from freq_utils import SweepConfig
 
 logger = logging.getLogger("Processor")
 logger.setLevel(logging.DEBUG)
@@ -11,127 +12,196 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
+def rcosdesign(beta, span, sps):
+    N = span * sps
+    t = np.arange(-N / 2, N / 2 + 1) / sps
+    h = np.sinc(t) * np.cos(np.pi * beta * t) / (1 - (2 * beta * t) ** 2)
+    h[t == 0.0] = 1.0
+    h[np.abs(2 * beta * t) == 1] = np.pi / 4
+    h = h / np.sum(h)
+    return h
+
+
 class SignalProcessor(QObject):
-    # === 对外信号 ===
-    signal_fft_ready = pyqtSignal(np.ndarray, np.ndarray)          # 单频频谱
-    signal_sweep_ready = pyqtSignal(np.ndarray, np.ndarray)        # 扫频频谱
-    signal_constellation_ready = pyqtSignal(np.ndarray)            # 星座图
-    signal_iq_ready = pyqtSignal(np.ndarray, np.ndarray)           # I路, Q路
+    signal_fft_ready = pyqtSignal(np.ndarray, np.ndarray)
+    signal_sweep_ready = pyqtSignal(np.ndarray, np.ndarray)
+    signal_constellation_ready = pyqtSignal(np.ndarray)
+    signal_iq_ready = pyqtSignal(np.ndarray, np.ndarray)
+    signal_frame_end = pyqtSignal()
+    signal_s21_ready = pyqtSignal(np.ndarray, np.ndarray)
 
-    def __init__(self):
-        super().__init__()
-        self.running = False
-        self.thread = None
-
-        # 默认扫频参数（可由 UI 调整）
-        self.sweep_start = 1e9
-        self.sweep_stop = 2.7e9
-        self.sweep_points = 10
+    def __init__(self, sweep_config: SweepConfig, parent=None):
+        super().__init__(parent)
+        self.sweep_config = sweep_config
+        self._sweep_config_version = sweep_config.version()
+        self._rrc_filter = rcosdesign(beta=0.35, span=8, sps=8)
         self._reset_sweep_buffers()
-
-        self._pending_config = None  # 等待扫频结束时应用的新配置
+        self.running = False
+        # self.thread = None
+        self.sweep_started = False
 
     def _reset_sweep_buffers(self):
-        self.sweep_freqs = [None] * self.sweep_points
-        self.sweep_mags = [None] * self.sweep_points
-        self.current_step = 0
+        self.sweep_mags = []
+        # self.current_step = 0
+        # self.best_energy = 0.0
+        # self.best_iq = None
+        # self.prev_lo_freqs = set()
+        # self.sweep_started = False
+        # logger.debug("Sweep buffers reset.")
 
-    def start(self):
-        if self.running:
-            return
-        self.running = True
-        self.thread = threading.Thread(target=self._process_loop, daemon=True)
-        self.thread.start()
+    # def start(self):
+        # if self.running:
+            # return
+        # self.running = True
+        # self.thread = threading.Thread(target=self._process_loop, daemon=True)
+        # self.thread.start()
 
-    def update_sweep_config(self, start_freq: float, stop_freq: float, num_points: int):
-        """
-        可由 UI 调用，更新扫频设置，等下一轮扫频结束后生效。
-        """
-        self._pending_config = (start_freq, stop_freq, num_points)
+    @pyqtSlot(float, float, bytes, int)
+    def process_frame(self, sample_freq: float, lo_freq_hz: float, frame_bytes: bytes, sweep_step: int):
 
-    @pyqtSlot(float, float, bytes)
-    def process_frame(self, sample_freq: float, lo_freq_hz: float, frame_bytes: bytes):
-        """
-        总入口：每收到一帧，先解码 IQ，再分发给各子模块。
-        """
+        # if lo_freq_hz in self.prev_lo_freqs:
+            # logger.warning(f"Duplicate LO freq {lo_freq_hz/1e6:.2f} MHz at step {sweep_step}, skipping.")
+            # return
+        # self.prev_lo_freqs.add(lo_freq_hz)
+        # save_payload(frame_bytes, prefix=f"frame_step{sweep_step:02d}_lo_idx{int(lo_freq_hz)}")
+
         try:
-            complex_iq = self._decode_iq_from_bytes(frame_bytes)
+            iq = self._decode_iq_from_bytes(frame_bytes)
         except Exception as e:
             logger.warning(f"IQ decode failed: {e}")
             return
 
-        # === 无需 FFT 的分发 ===
-        self.signal_constellation_ready.emit(complex_iq)
-        self.signal_iq_ready.emit(complex_iq.real, complex_iq.imag)
 
-        # === 计算 FFT ===
-        fft_result = np.fft.fftshift(np.fft.fft(complex_iq))
-        magnitude = 20 * np.log10(np.abs(fft_result) + 1e-6)
-        freqs = np.linspace(-sample_freq / 2, sample_freq / 2, len(magnitude)) + lo_freq_hz
+        # === 升采样 + RRC滤波 ===
+        rx_up = np.zeros(len(iq) * 2, dtype=np.complex64)
+        rx_up[::2] = iq
+        rx_interp = np.convolve(rx_up, self._rrc_filter, mode='same')
 
-        # === 单频频谱发射 ===
-        self.signal_fft_ready.emit(freqs, magnitude)
+        # === 星座图：相偏校正（非归一化） ===
 
-        # === 扫频逻辑 ===
-        self._update_sweep(freqs, magnitude, lo_freq_hz)
+        iq_norm = iq / (np.max(np.abs(iq)) + 1e-6)  # 避免溢出，仅用于角度估计
+        iq4 = -iq_norm ** 4
+        ang = np.angle(np.sum(iq4)) / 4
+        iq_corrected = iq * np.exp(-1j * ang)  # 使用原始幅度的 iq 做校正
 
-    def _update_sweep(self, freqs: np.ndarray, mag: np.ndarray, lo_freq: float):
-        """
-        每帧处理完后更新 sweep buffer。当前 step 为内部自动维护。
-        """
-        if self.current_step < self.sweep_points:
-            self.sweep_freqs[self.current_step] = freqs
-            self.sweep_mags[self.current_step] = mag
-            self.current_step += 1
+        threshold = np.max(np.abs(iq_corrected)) * 0.08
+        idx = np.where(np.abs(iq_corrected) > threshold)[0]
+        idx = idx[5:]  # 去掉前 5 个样点
+        IQ_filtered = iq_corrected[idx]
 
-        if self.current_step >= self.sweep_points:
-            full_freq = np.concatenate(self.sweep_freqs)
-            full_mag = np.concatenate(self.sweep_mags)
-            self.signal_sweep_ready.emit(full_freq, full_mag)
-            logger.debug("Sweep done. Emitted full sweep spectrum.")
 
-            # 重置状态
-            self.current_step = 0
 
-            # 应用 UI 的新配置
-            if self._pending_config:
-                self.sweep_start, self.sweep_stop, self.sweep_points = self._pending_config
-                self._reset_sweep_buffers()
-                logger.info(f"Sweep config updated: {self.sweep_start/1e6}-{self.sweep_stop/1e6} MHz / {self.sweep_points} pts")
-                self._pending_config = None
+        # === 频谱分析（使用升采样信号） ===
+        fft_len = int(2 ** np.ceil(np.log2(len(rx_interp))))
+        rx_fft = 20 * np.log10(np.abs(np.fft.fftshift(np.fft.fft(rx_interp, fft_len))) + 1e-6)
+
+        single_freqs = np.linspace(-sample_freq / 2, sample_freq / 2, len(rx_fft)) + lo_freq_hz
+
+        # === 更新 sweep 图谱（子频段） ===
+        center = fft_len // 2
+        side_len = fft_len // 8
+        sub_mag = rx_fft[center - side_len:center + side_len]
+        sub_mag = np.delete(sub_mag, side_len)
+
+        self.sweep_mags.append(sub_mag.copy())
+        # self.current_step += 1
+
+        spectrum_combined = np.concatenate(self.sweep_mags)
+        freq_axis = np.linspace(self.sweep_config.start, self.sweep_config.stop, len(spectrum_combined))
+
+        logger.debug(f"Processed frame: LO = {lo_freq_hz / 1e6:.2f} MHz, "
+                    f"Sample Freq = {sample_freq / 1e6:.2f} MHz, "
+                    f"Current Step = {sweep_step}, Sweep Points = {self.sweep_config.points}")
+
+        if sweep_step >= self.sweep_config.points - 1:
+            self._reset_sweep_buffers()
+            # logger.debug(f"Sweep completed at step {sweep_step}, resetting buffers.")
+
+        # 参数设置
+        f_start = 1e9       # 起始频率：1 GHz
+        f_stop = 2e9        # 终止频率：2 GHz
+        n_points = 201      # 频点数量
+
+        # 频率轴
+        freqs = np.linspace(f_start, f_stop, n_points)
+
+        # 构造一个中心频率为 1.5 GHz 的带通响应
+        center_freq = 1.5e9
+        bandwidth = 100e6
+        s21_db = ((freqs - center_freq) / (bandwidth / 2)) * 20  # 线性下降
+        s21_db = np.clip(s21_db, -1, 0)  # 限制最大衰减
+
+        # 添加一些随机噪声
+        noise = 1.5 * np.random.normal(0, 0.5, size=freqs.shape)
+        s21_db += noise
+        self.signal_s21_ready.emit(freqs, s21_db)
+        self.signal_constellation_ready.emit(IQ_filtered)
+        self.signal_fft_ready.emit(single_freqs, rx_fft)
+        self.signal_iq_ready.emit(iq.real, iq.imag)
+        self.signal_sweep_ready.emit(freq_axis, spectrum_combined)
+
+        import time
+        time.sleep(0.5)
+        self.signal_frame_end.emit()
+
+
+
 
     def _decode_iq_from_bytes(self, data_bytes: bytes) -> np.ndarray:
-        """
-        解码 IQ：每 4 字节一个 IQ 点，I0 I1 Q0 Q1。
-        nibble 权重为 [256, 4096, 1, 16]。
-        """
-        data = np.frombuffer(data_bytes, dtype=np.uint8)
-        if len(data) % 4 != 0:
-            raise ValueError("数据长度必须是 4 的倍数")
+        if len(data_bytes) % 2 != 0:
+            raise ValueError("Invalid IQ byte length")
+        data_bytes = np.frombuffer(data_bytes, dtype=np.uint8)
 
-        data = data.reshape(-1, 4)
+        A = data_bytes.reshape((2, -1), order='F')  # Fortran 顺序等价 MATLAB 列主序
+    
+        #A = A[:,8:]
+        # 偶数列：Q，奇数列：I
+        odd_A = A[:, 0::2]   # I 路
+        even_A = A[:, 1::2]  # Q 路
 
-        def decode_pairs(byte_pair: np.ndarray) -> np.ndarray:
-            b0 = byte_pair[:, 0].astype(np.uint8)
-            b1 = byte_pair[:, 1].astype(np.uint8)
+        # 展开为行向量
+        I_1 = odd_A.flatten(order='F')   # 1行，顺序一致
+        Q_1 = even_A.flatten(order='F')
 
-            n0 = ((b0 & 0xF0) >> 4).astype(np.int32)
-            n1 = (b0 & 0x0F).astype(np.int32)
-            n2 = ((b1 & 0xF0) >> 4).astype(np.int32)
-            n3 = (b1 & 0x0F).astype(np.int32)
+        # 提取高4位和低4位
+        def extract_nibbles(arr):
+            high = (arr & 0xF0) >> 4
+            low = arr & 0x0F
+            return high, low
 
-            val = n0 * 256 + n1 * 4096 + n2 * 1 + n3 * 16
-            val[val >= 32768] -= 65536
-            return val.astype(np.float32)
+        I_high, I_low = extract_nibbles(I_1)
+        Q_high, Q_low = extract_nibbles(Q_1)
 
-        I = decode_pairs(data[:, 0:2])
-        Q = decode_pairs(data[:, 2:4])
-        return I + 1j * Q
+        # 组合成 4 行再重排
+        
+        I_nibbles = np.vstack((I_high, I_low))  # shape: (2, N)
+        I_nibbles = I_nibbles.reshape((4, -1), order='F')  # shape: (4, N/2)
+        I_parts = I_nibbles[[2, 3, 0, 1], :]  # 按照 3,4,1,2 重排
+        I_parts = I_parts.astype(np.uint32)
+        I_vals = (I_parts[0] * 4096 +
+                I_parts[1] * 256 +
+                I_parts[2] * 16 +
+                I_parts[3]).astype(np.int32)
 
-    def _process_loop(self):
-        """
-        占位后台线程（如未来扩展实时采样等）。
-        """
-        while self.running:
-            pass  # 当前由外部驱动 process_frame
+        # 补码转换为有符号 int16
+        I_vals[I_vals >= 32768] -= 65536
+
+        # Q 通道同样处理
+        Q_nibbles = np.vstack((Q_high, Q_low))
+        Q_nibbles = Q_nibbles.reshape((4, -1), order='F')
+        Q_parts = Q_nibbles[[2, 3, 0, 1], :]
+        Q_parts = Q_parts.astype(np.uint32)
+        Q_vals = (Q_parts[0] * 4096 +
+                Q_parts[1] * 256 +
+                Q_parts[2] * 16 +
+                Q_parts[3]).astype(np.int32)
+        Q_vals[Q_vals >= 32768] -= 65536
+
+        # 返回复数 IQ 数据
+        Rx = I_vals.astype(np.float32) + 1j * Q_vals.astype(np.float32)
+        return Rx
+
+    # def _process_loop(self):
+    #     while self.running:
+    #         pass
 

@@ -10,6 +10,7 @@ class FigureManager:
         self._init_sweep_spectrum()  # ✅ 增加扫频图初始化
         self._init_constellation()
         self._init_iq()
+        self._init_s21()  # ✅ 新增 S21 图像初始化
     
     def _init_spectrum(self):
         self.spectrum_curve = self.ui.plt_spectrum.plot(pen='y')
@@ -36,6 +37,15 @@ class FigureManager:
         self.ui.plt_I.setLabel('bottom', '样本')
         self.ui.plt_Q.setLabel('left', '幅度')
         self.ui.plt_Q.setLabel('bottom', '样本')
+    
+    def _init_s21(self):
+        """
+        初始化 S21 图像。
+        """
+        self.s21_curve = self.ui.plt_s21.plot(pen='m')
+        self.ui.plt_s21.setLabel('left', '幅度', units='dB')
+        self.ui.plt_s21.setLabel('bottom', '频率', units='Hz')
+        self.ui.plt_s21.showGrid(x=True, y=True)
 
     # === 更新函数 ===
     def update_spectrum(self, freqs: np.ndarray, values: np.ndarray):
@@ -50,3 +60,11 @@ class FigureManager:
 
     def update_sweep_spectrum(self, freqs: np.ndarray, values: np.ndarray):  # ✅ 新增接口
         self.sweep_curve.setData(freqs, values)
+    
+    def update_s21(self, s21_x: np.ndarray, s21_y: np.ndarray):
+        """
+        更新 S21 图像。
+        :param s21_x: 频率数组
+        :param s21_y: 幅度数组
+        """
+        self.s21_curve.setData(s21_x, s21_y)

@@ -14,7 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1012, 687)
+        MainWindow.resize(2880, 1620)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(2880, 1620))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -23,7 +29,7 @@ class Ui_MainWindow(object):
         MainWindow.setFont(font)
         MainWindow.setStyleSheet("* {\n"
 "    font-family: \"Segoe UI\", \"Microsoft YaHei\", sans-serif;\n"
-"    font-size: 14px;\n"
+"    font-size: 30px;\n"
 "}\n"
 "\n"
 "\n"
@@ -31,7 +37,7 @@ class Ui_MainWindow(object):
 "    background-color: #1a1f2c; /* 深蓝黑底 */\n"
 "    color: #e0e0e0;            /* 浅灰字体 */\n"
 "    font-family: \"Segoe UI\", \"Microsoft YaHei\", sans-serif;\n"
-"    font-size: 14px;\n"
+"    font-size: 30px;\n"
 "}\n"
 "\n"
 "QLabel {\n"
@@ -45,6 +51,8 @@ class Ui_MainWindow(object):
 "    padding: 4px;\n"
 "    color: #ffffff;\n"
 "    selection-background-color: #5c6a89;\n"
+"    font-family: \"Segoe UI\", \"Microsoft YaHei\", sans-serif;\n"
+"    font-size: 25px;\n"
 "}\n"
 "\n"
 "QComboBox {\n"
@@ -91,7 +99,7 @@ class Ui_MainWindow(object):
 "    border-radius: 6px;\n"
 "    padding: 6px 12px;\n"
 "    font-weight: bold;\n"
-"    font-size: 14px;\n"
+"    font-size: 30px;\n"
 "    text-align: center;\n"
 "    /*box-shadow: 0px 2px 5px rgba(0,0,0,0.6);*/\n"
 "}\n"
@@ -217,7 +225,7 @@ class Ui_MainWindow(object):
         self.plt_sweep_spectrum.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_sweep_spectrum.setObjectName("plt_sweep_spectrum")
         self.label_2 = QtWidgets.QLabel(self.plt_sweep_spectrum)
-        self.label_2.setGeometry(QtCore.QRect(70, 10, 121, 31))
+        self.label_2.setGeometry(QtCore.QRect(70, 10, 131, 41))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -244,7 +252,7 @@ class Ui_MainWindow(object):
         self.plt_s21.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_s21.setObjectName("plt_s21")
         self.label_3 = QtWidgets.QLabel(self.plt_s21)
-        self.label_3.setGeometry(QtCore.QRect(70, 10, 121, 31))
+        self.label_3.setGeometry(QtCore.QRect(70, 10, 191, 41))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -287,7 +295,7 @@ class Ui_MainWindow(object):
         self.plt_cstl.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_cstl.setObjectName("plt_cstl")
         self.label_8 = QtWidgets.QLabel(self.plt_cstl)
-        self.label_8.setGeometry(QtCore.QRect(80, 10, 61, 31))
+        self.label_8.setGeometry(QtCore.QRect(50, 10, 101, 41))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -321,7 +329,7 @@ class Ui_MainWindow(object):
         self.plt_I.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_I.setObjectName("plt_I")
         self.label_9 = QtWidgets.QLabel(self.plt_I)
-        self.label_9.setGeometry(QtCore.QRect(60, 10, 61, 31))
+        self.label_9.setGeometry(QtCore.QRect(50, 10, 131, 41))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -348,7 +356,7 @@ class Ui_MainWindow(object):
         self.plt_Q.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_Q.setObjectName("plt_Q")
         self.label = QtWidgets.QLabel(self.plt_Q)
-        self.label.setGeometry(QtCore.QRect(60, 10, 61, 31))
+        self.label.setGeometry(QtCore.QRect(50, 10, 131, 41))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -381,7 +389,7 @@ class Ui_MainWindow(object):
         self.plt_spectrum.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.plt_spectrum.setObjectName("plt_spectrum")
         self.label_7 = QtWidgets.QLabel(self.plt_spectrum)
-        self.label_7.setGeometry(QtCore.QRect(80, 10, 71, 31))
+        self.label_7.setGeometry(QtCore.QRect(60, 10, 131, 41))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(-1)
@@ -409,10 +417,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.btn_conn = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_conn.sizePolicy().hasHeightForWidth())
+        self.btn_conn.setSizePolicy(sizePolicy)
         self.btn_conn.setStyleSheet("")
         self.btn_conn.setObjectName("btn_conn")
         self.horizontalLayout_2.addWidget(self.btn_conn)
         self.lbl_conn_light = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lbl_conn_light.sizePolicy().hasHeightForWidth())
+        self.lbl_conn_light.setSizePolicy(sizePolicy)
         self.lbl_conn_light.setStyleSheet("QLabel#lbl_conn_light {\n"
 "    background-color: #cccccc;       /* 默认：灰色（未连接） */\n"
 "    border: 2px solid #222;\n"
@@ -427,19 +445,45 @@ class Ui_MainWindow(object):
         self.lbl_conn_light.setObjectName("lbl_conn_light")
         self.horizontalLayout_2.addWidget(self.lbl_conn_light)
         self.lbl_conn_state = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lbl_conn_state.sizePolicy().hasHeightForWidth())
+        self.lbl_conn_state.setSizePolicy(sizePolicy)
         self.lbl_conn_state.setObjectName("lbl_conn_state")
         self.horizontalLayout_2.addWidget(self.lbl_conn_state)
         self.horizontalLayout_2.setStretch(0, 1)
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
         self.btn_start = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_start.sizePolicy().hasHeightForWidth())
+        self.btn_start.setSizePolicy(sizePolicy)
         self.btn_start.setStyleSheet("")
         self.btn_start.setObjectName("btn_start")
         self.verticalLayout_3.addWidget(self.btn_start)
         self.btn_stop = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_stop.sizePolicy().hasHeightForWidth())
+        self.btn_stop.setSizePolicy(sizePolicy)
         self.btn_stop.setStyleSheet("")
         self.btn_stop.setObjectName("btn_stop")
         self.verticalLayout_3.addWidget(self.btn_stop)
         self.btn_save = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_save.sizePolicy().hasHeightForWidth())
+        self.btn_save.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_save.setFont(font)
         self.btn_save.setStyleSheet("")
         self.btn_save.setObjectName("btn_save")
         self.verticalLayout_3.addWidget(self.btn_save)
@@ -448,15 +492,93 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addItem(spacerItem5)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem6)
+        self.txt_mod = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_mod.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_mod.sizePolicy().hasHeightForWidth())
+        self.txt_mod.setSizePolicy(sizePolicy)
+        self.txt_mod.setMinimumSize(QtCore.QSize(0, 5))
+        self.txt_mod.setBaseSize(QtCore.QSize(1, 0))
+        self.txt_mod.setObjectName("txt_mod")
+        self.verticalLayout_4.addWidget(self.txt_mod)
+        self.txt_evm = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_evm.sizePolicy().hasHeightForWidth())
+        self.txt_evm.setSizePolicy(sizePolicy)
+        self.txt_evm.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_evm.setObjectName("txt_evm")
+        self.verticalLayout_4.addWidget(self.txt_evm)
+        self.txt_imb_a = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_imb_a.sizePolicy().hasHeightForWidth())
+        self.txt_imb_a.setSizePolicy(sizePolicy)
+        self.txt_imb_a.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_imb_a.setObjectName("txt_imb_a")
+        self.verticalLayout_4.addWidget(self.txt_imb_a)
+        self.txt_imb_p = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_imb_p.sizePolicy().hasHeightForWidth())
+        self.txt_imb_p.setSizePolicy(sizePolicy)
+        self.txt_imb_p.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_imb_p.setObjectName("txt_imb_p")
+        self.verticalLayout_4.addWidget(self.txt_imb_p)
+        self.txt_valid = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_valid.sizePolicy().hasHeightForWidth())
+        self.txt_valid.setSizePolicy(sizePolicy)
+        self.txt_valid.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_valid.setObjectName("txt_valid")
+        self.verticalLayout_4.addWidget(self.txt_valid)
         self.verticalLayout_2.addLayout(self.verticalLayout_4)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_2.addItem(spacerItem7)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_2.addItem(spacerItem6)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem8)
+        self.txt_set_freq_low = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_set_freq_low.sizePolicy().hasHeightForWidth())
+        self.txt_set_freq_low.setSizePolicy(sizePolicy)
+        self.txt_set_freq_low.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_set_freq_low.setObjectName("txt_set_freq_low")
+        self.verticalLayout_5.addWidget(self.txt_set_freq_low)
+        self.txt_set_freq_high = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_set_freq_high.sizePolicy().hasHeightForWidth())
+        self.txt_set_freq_high.setSizePolicy(sizePolicy)
+        self.txt_set_freq_high.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_set_freq_high.setObjectName("txt_set_freq_high")
+        self.verticalLayout_5.addWidget(self.txt_set_freq_high)
+        self.txt_set_freq_pts = QtWidgets.QTextEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txt_set_freq_pts.sizePolicy().hasHeightForWidth())
+        self.txt_set_freq_pts.setSizePolicy(sizePolicy)
+        self.txt_set_freq_pts.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_set_freq_pts.setObjectName("txt_set_freq_pts")
+        self.verticalLayout_5.addWidget(self.txt_set_freq_pts)
+        self.btn_set_freq = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_set_freq.sizePolicy().hasHeightForWidth())
+        self.btn_set_freq.setSizePolicy(sizePolicy)
+        self.btn_set_freq.setObjectName("btn_set_freq")
+        self.verticalLayout_5.addWidget(self.btn_set_freq)
         self.verticalLayout_2.addLayout(self.verticalLayout_5)
         self.verticalLayout_2.setStretch(0, 1)
         self.verticalLayout_2.setStretch(2, 1)
@@ -466,7 +588,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1012, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 2880, 46))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -493,6 +615,50 @@ class Ui_MainWindow(object):
         self.btn_start.setText(_translate("MainWindow", "开始运行"))
         self.btn_stop.setText(_translate("MainWindow", "停止运行"))
         self.btn_save.setText(_translate("MainWindow", "保存数据"))
+        self.txt_mod.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">调制方式：</span></p></body></html>"))
+        self.txt_evm.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">EVM (%) ：</span></p></body></html>"))
+        self.txt_imb_a.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">幅度不平衡：</span></p></body></html>"))
+        self.txt_imb_p.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">相位不平衡：</span></p></body></html>"))
+        self.txt_valid.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">信号有效性：</span></p></body></html>"))
+        self.txt_set_freq_low.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">扫频起始点 (GHz)：</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>"))
+        self.txt_set_freq_high.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">扫频终止点 (GHz)：</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>"))
+        self.txt_set_freq_pts.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">扫频点数：</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>"))
+        self.btn_set_freq.setText(_translate("MainWindow", "发送"))
 from pyqtgraph import PlotWidget
 
 if __name__ == "__main__":
