@@ -30,6 +30,11 @@ class SignalProcessor(QObject):
     signal_constellation_ready = pyqtSignal(np.ndarray)
     signal_iq_ready = pyqtSignal(np.ndarray, np.ndarray)
     signal_s21_ready = pyqtSignal(np.ndarray, np.ndarray)
+    signal_curr_freq_ready = pyqtSignal(str)
+    signal_evm_ready = pyqtSignal(str)
+    signal_imb_a_ready = pyqtSignal(str)
+    signal_imb_p_ready = pyqtSignal(str)
+    signal_mod_type_ready = pyqtSignal(str)
 
     signal_frame_end = pyqtSignal()
 
@@ -61,13 +66,9 @@ class SignalProcessor(QObject):
 
     @pyqtSlot(float, float, bytes, int)
     def process_frame(self, sample_freq: float, lo_freq_hz: float, frame_bytes: bytes, sweep_step: int):
+        """处理每帧 IQ 数据并发射多个信号，驱动 UI 更新。"""
 
-        # if lo_freq_hz in self.prev_lo_freqs:
-            # logger.warning(f"Duplicate LO freq {lo_freq_hz/1e6:.2f} MHz at step {sweep_step}, skipping.")
-            # return
-        # self.prev_lo_freqs.add(lo_freq_hz)
-        # save_payload(frame_bytes, prefix=f"frame_step{sweep_step:02d}_lo_idx{int(lo_freq_hz)}")
-
+        # === 解码原始 IQ ===
         try:
             iq = self._decode_iq_from_bytes(frame_bytes)
         except Exception as e:
@@ -75,127 +76,89 @@ class SignalProcessor(QObject):
             return
 
         self.signal_iq_ready.emit(iq.real, iq.imag)
+        self.signal_curr_freq_ready.emit(f"{lo_freq_hz / 1e6:.2f}")
 
-
-        # === 升采样 + RRC滤波 ===
+        # === 升采样 + RRC 滤波 ===
         rx_up = np.zeros(len(iq) * 2, dtype=np.complex64)
         rx_up[::2] = iq
         rx_interp = np.convolve(rx_up, self._rrc_filter, mode='same')
 
-        # === 星座图：相偏校正（非归一化） ===
-
-        iq_norm = iq / (np.max(np.abs(iq)) + 1e-6)  # 避免溢出，仅用于角度估计
+        # === 星座图相位校正 ===
+        iq_norm = iq / (np.max(np.abs(iq)) + 1e-6)
         iq4 = -iq_norm ** 4
         ang = np.angle(np.sum(iq4)) / 4
-        iq_corrected = iq * np.exp(-1j * ang)  # 使用原始幅度的 iq 做校正
+        iq_corrected = iq * np.exp(-1j * ang)
 
+        # === 星座点筛选 ===
         threshold = np.max(np.abs(iq_corrected)) * 0.08
-        idx = np.where(np.abs(iq_corrected) > threshold)[0]
-        idx = idx[5:]  # 去掉前 5 个样点
+        idx = np.where(np.abs(iq_corrected) > threshold)[0][5:]  # 去掉前5点
         IQ_filtered = iq_corrected[idx]
         self.signal_constellation_ready.emit(IQ_filtered)
 
-
-
-
-
-# 假设已有 IQ 数据：
-# IQ = ... （复数 numpy array，例如 np.load('your_file.npy')）
-
-# --- QAM 类型判断（基于幅度比） ---
+        # === 调制方式估计 ===
         radii = np.abs(IQ_filtered)
-        r_max = np.mean(np.sort(radii)[-20:])  # maxk
-        r_min = np.mean(np.sort(radii)[:20])   # mink
+        r_max = np.mean(np.sort(radii)[-20:])
+        r_min = np.mean(np.sort(radii)[:20])
         R = r_max / r_min
 
-        # 可选调制方案列表
-        Rs = np.array([1.0, 3.0, 7.0, 15.0])  # 假设不同调制类型的幅度比特征
+        Rs = np.array([1.0, 3.0, 7.0, 15.0])
         nnqam = ['QPSK', '16QAM', '64QAM', '256QAM']
         nqam_values = {'QPSK': 4, '16QAM': 16, '64QAM': 64, '256QAM': 256}
 
-        idx = np.argmin(np.abs(Rs - R))
-        mod_type = nnqam[idx]
-        # print(f"检测调制类型: {QAM_type}")
-
-        # --- EVM 估计 ---
+        mod_type = nnqam[np.argmin(np.abs(Rs - R))]
         nqam = nqam_values[mod_type]
-        #bits = np.random.randint(0, nqam, size=len(IQ_filtered))
 
-        # 理想 QAM 星座图（平均功率归一化）
-        ref_data = np.sqrt(1) * (
-            np.array([complex(x, y) for x in np.linspace(-(np.sqrt(nqam)-1), (np.sqrt(nqam)-1), int(np.sqrt(nqam))) 
-                                for y in np.linspace(-(np.sqrt(nqam)-1), (np.sqrt(nqam)-1), int(np.sqrt(nqam)))])
-            / np.sqrt((2/3)*(nqam - 1))  # 平均功率归一化:w
-        )
+        # === 构建参考星座点（单位平均功率） ===
+        levels = np.linspace(-(np.sqrt(nqam)-1), (np.sqrt(nqam)-1), int(np.sqrt(nqam)))
+        ref_data = np.array([complex(x, y) for x in levels for y in levels])
+        ref_data /= np.sqrt((2/3)*(nqam - 1))  # 功率归一化
 
-        # # 将 IQ 归一化到均方根为 1
+        # === 归一化 IQ 用于 EVM 分析 ===
         IQ_norm = IQ_filtered / np.sqrt(np.mean(np.abs(IQ_filtered)**2))
-
-        # # 找出 IQ_norm 中每个点最近的理想星座点
-        # # （使用广播 + cdist 可加速）
-        ideal_IQ = np.zeros_like(IQ_norm, dtype=complex)
-        # import time
-        # t = time.time()
-        # dist_matrix = cdist(IQ_norm.reshape(-1,1), ref_data.reshape(-1,1), metric='euclidean')
-        # logger.debug(f"Distance matrix computed in {time.time() - t:.4f} seconds")
-        # 示例：IQ_norm 有 1024 个复数点，ref_data 是星座参考点（如 QAM 的16个）
-
-        # 将复数转换成二维实数向量
         IQ_vecs = np.column_stack((IQ_norm.real, IQ_norm.imag))
         ref_vecs = np.column_stack((ref_data.real, ref_data.imag))
 
-        # 计算每个 IQ 点到所有参考点的距离
         dist_matrix = cdist(IQ_vecs, ref_vecs, metric='euclidean')
-
-        # 每个点到最近参考点的距离 & 对应参考点的索引
-        min_dists = np.min(dist_matrix, axis=1)         # shape: (1024,)
-        nearest_indices = np.argmin(dist_matrix, axis=1)  # shape: (1024,)
-        # closest_indices = np.argmin(dist_matrix, axis=1)
+        nearest_indices = np.argmin(dist_matrix, axis=1)
         ideal_IQ = ref_data[nearest_indices]
 
-        # # EVM 计算
+        # === EVM 计算 ===
         evm_vector = IQ_norm - ideal_IQ
         EVM_rms = np.sqrt(np.mean(np.abs(evm_vector)**2))
         EVM_ref = np.sqrt(np.mean(np.abs(ideal_IQ)**2))
-        EVM = (EVM_rms / EVM_ref) * 100
-        # # print(f"EVM = {EVM_percent:.2f} %")
+        EVM = (EVM_rms / EVM_ref) * 100  # 单位：百分比
+        self.signal_evm_ready.emit(f"{EVM:.2f}")
+        # 需要用 evm 判断是否有效
+        self.signal_mod_type_ready.emit(f"{mod_type} ({nqam}))" if EVM < 10 else "未知")
 
-        # # --- IQ 增益不平衡 ---
+        # === IQ 不平衡分析 ===
         gain_I = np.sqrt(np.mean(np.real(IQ_filtered)**2))
         gain_Q = np.sqrt(np.mean(np.imag(IQ_filtered)**2))
         gain_imbalance_db = 20 * np.log10(gain_I / gain_Q)
-        # #print(f"Gain Imbalance = {gain_imbalance_db:.2f} dB")
+        self.signal_imb_a_ready.emit(f"{gain_imbalance_db:.2f}")
 
-        # # --- IQ 相位不平衡 ---
         I_dc = np.real(IQ_filtered) - np.mean(np.real(IQ_filtered))
         Q_dc = np.imag(IQ_filtered) - np.mean(np.imag(IQ_filtered))
-
         iq_imp_amp = np.arccos(np.clip(np.dot(I_dc, Q_dc) / (np.linalg.norm(I_dc) * np.linalg.norm(Q_dc)), -1.0, 1.0))
         iq_imp_phase = np.degrees(iq_imp_amp) - 90
-        #print(f"Phase Imbalance = {phi_deg:.2f} degrees")
+        self.signal_imb_p_ready.emit(f"{iq_imp_phase:.2f}")
 
-        # 计算出 mod_type, EVM, iq_imp_amp, iq_imp_phase
-        mod_type = "QAM-16"  
-        EVM = 0.05
-        iq_imp_amp = 0.02
-        iq_imp_phase = 0.01
+        # （调试打印可启用）
+        # logger.debug(f"Mod={mod_type}, EVM={EVM:.2f}%, GainImb={gain_imbalance_db:.2f} dB, PhaseImb={iq_imp_phase:.2f}°")
 
-
-        # === 频谱分析（使用升采样信号） ===
+        # === 频谱分析 ===
         fft_len = int(2 ** np.ceil(np.log2(len(rx_interp))))
         rx_fft = 20 * np.log10(np.abs(np.fft.fftshift(np.fft.fft(rx_interp, fft_len))) + 1e-6)
         single_freqs = np.linspace(-sample_freq / 2, sample_freq / 2, len(rx_fft)) + lo_freq_hz
         self.signal_fft_ready.emit(single_freqs, rx_fft)
 
-        # === 更新 sweep 图谱（子频段） ===
+        # === 子频段拼接用于 Sweep 视图 ===
         center = fft_len // 2
         side_len = fft_len // 8
         sub_mag = rx_fft[center - side_len:center + side_len]
-        sub_mag = np.delete(sub_mag, side_len)
+        sub_mag = np.delete(sub_mag, side_len)  # 去掉中心点
 
         self.sweep_mags.append(sub_mag.copy())
-        # self.current_step += 1
-
         spectrum_combined = np.concatenate(self.sweep_mags)
         freq_axis = np.linspace(self.sweep_config.start, self.sweep_config.stop, len(spectrum_combined))
         self.signal_sweep_ready.emit(freq_axis, spectrum_combined)
@@ -204,34 +167,18 @@ class SignalProcessor(QObject):
                     f"Sample Freq = {sample_freq / 1e6:.2f} MHz, "
                     f"Current Step = {sweep_step}, Sweep Points = {self.sweep_config.points}")
 
-        # 参数设置
-        f_start = 1e9       # 起始频率：1 GHz
-        f_stop = 2e9        # 终止频率：2 GHz
-        n_points = 201      # 频点数量
-
-        # 频率轴
+        # === 构造示意性 S21 曲线 ===
+        f_start, f_stop, n_points = 1e9, 2e9, 201
         freqs = np.linspace(f_start, f_stop, n_points)
-
-        # 构造一个中心频率为 1.5 GHz 的带通响应
-        center_freq = 1.5e9
-        bandwidth = 100e6
-        s21_db = ((freqs - center_freq) / (bandwidth / 2)) * 20  # 线性下降
-        s21_db = np.clip(s21_db, -1, 0)  # 限制最大衰减
-
-        # 添加一些随机噪声
-        noise = 1.5 * np.random.normal(0, 0.5, size=freqs.shape)
-        s21_db += noise
+        s21_db = ((freqs - 1.5e9) / (100e6 / 2)) * 20
+        s21_db = np.clip(s21_db, -1, 0) + 1.5 * np.random.normal(0, 0.5, size=n_points)
         self.signal_s21_ready.emit(freqs, s21_db)
 
-
-
+        # === 通知 UI 数据处理完成 ===
         self.signal_frame_end.emit()
 
         if sweep_step >= self.sweep_config.points - 1:
             self._reset_sweep_buffers()
-            # logger.debug(f"Sweep completed at step {sweep_step}, resetting buffers.")
-
-
 
     def _decode_iq_from_bytes(self, data_bytes: bytes) -> np.ndarray:
         if len(data_bytes) % 2 != 0:

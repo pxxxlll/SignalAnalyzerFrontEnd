@@ -187,7 +187,7 @@ class DataReceiver(QObject):
         self.send_cmd("stop")
         next_lo = freq_to_lo_index(self.sweep_config.start + self._sweep_step * (self.sweep_config.stop - self.sweep_config.start) / max(1, self.sweep_config.points - 1))
         print(f"Next LO Index (Dec): {next_lo}")
-        QTimer.singleShot(50, partial(self.send_cmd, "start", lo_index=int(next_lo)))
+        QTimer.singleShot(100, partial(self.send_cmd, "start", lo_index=int(next_lo)))
 
 
 

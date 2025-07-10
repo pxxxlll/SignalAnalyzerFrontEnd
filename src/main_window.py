@@ -40,7 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.figures = FigureManager(self)  # 把 self 传进去以访问 ui 对象
         self.update_done_sema = QSemaphore(0) # 用于给 Controller 申请
-        self.total_expected_updates = 5
+        self.total_expected_updates = 10 
 
         # 设置常量字典
         self.lbl_conn_state_texts = {
@@ -179,6 +179,59 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.figures.update_s21(s21_x, s21_y)
         # logger.debug("Calling update_s21")
         # self._any_update_done()  # 释放信号量，表示更新已完成
+
+    @pyqtSlot(str)
+    @update_wrapper
+    def update_curr_freq(self, curr_freq: str):
+        """
+        更新当前频率显示。
+        :param cur_freq: 当前频率字符串
+        """
+        curr_freq = "当前频率 (Hz):\n" + curr_freq
+        self.txt_curr_freq.setText(curr_freq)
+        # logger.debug("Calling update_cur_freq")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
+    
+    @pyqtSlot(str)
+    @update_wrapper
+    def update_evm(self, evm: str):
+        """
+        更新 EVM 显示。
+        :param evm: EVM 字符串
+        """
+        evm = "EVM (%):\n" + evm
+        self.txt_evm.setText(evm)
+
+    @pyqtSlot(str)
+    @update_wrapper
+    def update_imb_a(self, imb_a: str):
+        """
+        更新 I/Q 不平衡幅度。
+        :param imb_a: 幅度字符串
+        """
+        imb_a = "幅度不平衡 (dB):\n" + imb_a
+        self.txt_imb_a.setText(imb_a)
+
+    @pyqtSlot(str)
+    @update_wrapper
+    def update_imb_p(self, imb_p: str):
+        """
+        更新 I/Q 不平衡相位。
+        :param imb_p: 相位字符串
+        """
+        imb_p = "相位不平衡 (°):\n" + imb_p
+        self.txt_imb_p.setText(imb_p)
+
+    @pyqtSlot(str)
+    @update_wrapper
+    def update_mod_type(self, mod_type: str):
+        """
+        更新调制类型显示。
+        :param mod_type: 调制类型字符串
+        """
+        mod_type = "调制类型:\n" + mod_type
+        self.txt_mod_type.setText(mod_type) 
+    
 
 
 # 运行窗口

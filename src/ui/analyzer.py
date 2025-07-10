@@ -492,17 +492,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addItem(spacerItem5)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.txt_mod = QtWidgets.QTextEdit(self.centralwidget)
-        self.txt_mod.setEnabled(True)
+        self.txt_mod_type = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_mod_type.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txt_mod.sizePolicy().hasHeightForWidth())
-        self.txt_mod.setSizePolicy(sizePolicy)
-        self.txt_mod.setMinimumSize(QtCore.QSize(0, 5))
-        self.txt_mod.setBaseSize(QtCore.QSize(1, 0))
-        self.txt_mod.setObjectName("txt_mod")
-        self.verticalLayout_4.addWidget(self.txt_mod)
+        sizePolicy.setHeightForWidth(self.txt_mod_type.sizePolicy().hasHeightForWidth())
+        self.txt_mod_type.setSizePolicy(sizePolicy)
+        self.txt_mod_type.setMinimumSize(QtCore.QSize(0, 5))
+        self.txt_mod_type.setBaseSize(QtCore.QSize(1, 0))
+        self.txt_mod_type.setObjectName("txt_mod_type")
+        self.verticalLayout_4.addWidget(self.txt_mod_type)
         self.txt_evm = QtWidgets.QTextEdit(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -530,15 +530,15 @@ class Ui_MainWindow(object):
         self.txt_imb_p.setMinimumSize(QtCore.QSize(0, 1))
         self.txt_imb_p.setObjectName("txt_imb_p")
         self.verticalLayout_4.addWidget(self.txt_imb_p)
-        self.txt_valid = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_curr_freq = QtWidgets.QTextEdit(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txt_valid.sizePolicy().hasHeightForWidth())
-        self.txt_valid.setSizePolicy(sizePolicy)
-        self.txt_valid.setMinimumSize(QtCore.QSize(0, 1))
-        self.txt_valid.setObjectName("txt_valid")
-        self.verticalLayout_4.addWidget(self.txt_valid)
+        sizePolicy.setHeightForWidth(self.txt_curr_freq.sizePolicy().hasHeightForWidth())
+        self.txt_curr_freq.setSizePolicy(sizePolicy)
+        self.txt_curr_freq.setMinimumSize(QtCore.QSize(0, 1))
+        self.txt_curr_freq.setObjectName("txt_curr_freq")
+        self.verticalLayout_4.addWidget(self.txt_curr_freq)
         self.verticalLayout_2.addLayout(self.verticalLayout_4)
         spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout_2.addItem(spacerItem6)
@@ -615,7 +615,7 @@ class Ui_MainWindow(object):
         self.btn_start.setText(_translate("MainWindow", "开始运行"))
         self.btn_stop.setText(_translate("MainWindow", "停止运行"))
         self.btn_save.setText(_translate("MainWindow", "保存数据"))
-        self.txt_mod.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.txt_mod_type.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
@@ -629,17 +629,17 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">幅度不平衡：</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">幅度不平衡  (dB)：</span></p></body></html>"))
         self.txt_imb_p.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">相位不平衡：</span></p></body></html>"))
-        self.txt_valid.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">相位不平衡 (°)：</span></p></body></html>"))
+        self.txt_curr_freq.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Segoe UI\',\'Microsoft YaHei\',\'sans-serif\'; font-size:25px; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">信号有效性：</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">当前频率 (MHz)：</span></p></body></html>"))
         self.txt_set_freq_low.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

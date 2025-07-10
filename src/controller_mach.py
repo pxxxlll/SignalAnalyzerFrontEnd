@@ -43,6 +43,13 @@ class MainController(QObject):
         self.processor.signal_iq_ready.connect(self.display.update_iq)
         self.processor.signal_s21_ready.connect(self.display.update_s21)
 
+        self.processor.signal_curr_freq_ready.connect(self.display.update_curr_freq)
+        self.processor.signal_evm_ready.connect(self.display.update_evm)
+        self.processor.signal_imb_a_ready.connect(self.display.update_imb_a)
+        self.processor.signal_imb_p_ready.connect(self.display.update_imb_p)    
+        self.processor.signal_mod_type_ready.connect(self.display.update_mod_type)  
+        # 处理完一帧后，通知 UI 更新
+
         # self.processor.signal_frame_end.connect(self.receiver.next_sweep) # 
         self.processor.signal_frame_end.connect(self.on_frame_processed) # 申请信号量
         self.display.signal_ui_all_updated.connect(self.receiver.next_sweep)
@@ -55,7 +62,7 @@ class MainController(QObject):
         # 控制按钮操作
         def send_restart():
             self.receiver.send_cmd("stop")
-            QTimer.singleShot(50, partial(self.receiver.send_cmd, "start", freq_to_lo_index(self.sweep_config.start)))
+            QTimer.singleShot(1000, partial(self.receiver.send_cmd, "start", freq_to_lo_index(self.sweep_config.start)))
 
         self.display.btn_start.clicked.connect(send_restart)
         self.display.btn_stop.clicked.connect(lambda: self.receiver.send_cmd("stop"))
