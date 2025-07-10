@@ -54,10 +54,10 @@ class MainController(QObject):
         self.processor.signal_frame_end.connect(self.on_frame_processed) # 申请信号量
         self.display.signal_ui_all_updated.connect(self.receiver.next_sweep)
 
-
         # UI → 接收控制
         self.display.signal_try_conn.connect(self.receiver.start)
         self.display.signal_try_off.connect(self.receiver.stop)
+        self.display.signal_set_sweep_config.connect(self.set_sweep_config)
 
         # 控制按钮操作
         def send_restart():
@@ -70,6 +70,8 @@ class MainController(QObject):
         # === 预留：UI 扫频参数更改接口 ===
         # self.display.signal_sweep_config_changed.connect(self.processor.update_sweep_range)u'p
 
+
+    @pyqtSlot(SweepConfig)
     def set_sweep_config(self, config: SweepConfig):
         # 不替换 sweep_config 对象，而是更新其字段
         self.sweep_config.start = config.start

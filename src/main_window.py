@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5 import uic
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot, QSemaphore
 from ui.analyzer import Ui_MainWindow  
@@ -6,6 +6,8 @@ import pyqtgraph as pg
 import sys
 import numpy as np
 from figure_manager import FigureManager  # 导入图像管理器
+import re
+from freq_utils import SweepConfig  # 导入扫频配置类
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -32,6 +34,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     signal_try_off = pyqtSignal()
 
     signal_ui_all_updated = pyqtSignal()
+    signal_set_sweep_config = pyqtSignal(SweepConfig)  # 发射扫频配置信号
 
     def __init__(self):
         super().__init__()
@@ -187,7 +190,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         更新当前频率显示。
         :param cur_freq: 当前频率字符串
         """
-        curr_freq = "当前频率 (Hz):\n" + curr_freq
+        curr_freq = "当前频率 (MHz):\n" + curr_freq
         self.txt_curr_freq.setText(curr_freq)
         # logger.debug("Calling update_cur_freq")
         # self._any_update_done()  # 释放信号量，表示更新已完成
@@ -231,7 +234,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         mod_type = "调制类型:\n" + mod_type
         self.txt_mod_type.setText(mod_type) 
-    
+
+
+
+    @pyqtSlot()
+    def on_btn_set_freq_clicked(self):
+        try:
+            # 原始输入文本
+            low_text = self.txt_set_freq_low.toPlainText()
+            high_text = self.txt_set_freq_high.toPlainText()
+            pts_text = self.txt_set_freq_pts.toPlainText()
+
+            # 使用正则提取第一个浮点数（支持小数）
+            def extract_number(text, default=None):
+                match = re.search(r"[-+]?\d*\.?\d+", text)
+                return float(match.group()) if match else default
+
+            f_low = extract_number(low_text)
+            f_high = extract_number(high_text)
+            points = int(extract_number(pts_text))
+
+            if f_low is None or f_high is None or points is None:
+                raise ValueError("无法解析全部输入内容")
+
+            # 转换为 Hz 单位
+            f_low *= 1e9
+            f_high *= 1e9
+
+            if f_low >= f_high:
+                raise ValueError("起始频率必须小于终止频率")
+            if points < 2:
+                raise ValueError("点数必须大于等于 2")
+
+            print(f"设置频率范围: {f_low/1e9:.2f} GHz - {f_high/1e9:.2f} GHz，共 {points} 点")
+            config = SweepConfig(f_low, f_high, points)
+            self.signal_set_sweep_config.emit(config)  # 发射扫频配置信号
+
+        except Exception as e:
+            QMessageBox.critical(self, "输入错误", f"解析失败：{str(e)}")
+ 
 
 
 # 运行窗口
