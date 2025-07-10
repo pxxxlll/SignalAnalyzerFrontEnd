@@ -3,6 +3,8 @@ import numpy as np
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 import logging
 from freq_utils import SweepConfig
+from scipy.signal import resample
+from scipy.spatial.distance import cdist
 
 logger = logging.getLogger("Processor")
 logger.setLevel(logging.DEBUG)
@@ -92,6 +94,91 @@ class SignalProcessor(QObject):
         idx = idx[5:]  # 去掉前 5 个样点
         IQ_filtered = iq_corrected[idx]
         self.signal_constellation_ready.emit(IQ_filtered)
+
+
+
+
+
+# 假设已有 IQ 数据：
+# IQ = ... （复数 numpy array，例如 np.load('your_file.npy')）
+
+# --- QAM 类型判断（基于幅度比） ---
+        radii = np.abs(IQ_filtered)
+        r_max = np.mean(np.sort(radii)[-20:])  # maxk
+        r_min = np.mean(np.sort(radii)[:20])   # mink
+        R = r_max / r_min
+
+        # 可选调制方案列表
+        Rs = np.array([1.0, 3.0, 7.0, 15.0])  # 假设不同调制类型的幅度比特征
+        nnqam = ['QPSK', '16QAM', '64QAM', '256QAM']
+        nqam_values = {'QPSK': 4, '16QAM': 16, '64QAM': 64, '256QAM': 256}
+
+        idx = np.argmin(np.abs(Rs - R))
+        mod_type = nnqam[idx]
+        # print(f"检测调制类型: {QAM_type}")
+
+        # --- EVM 估计 ---
+        nqam = nqam_values[mod_type]
+        #bits = np.random.randint(0, nqam, size=len(IQ_filtered))
+
+        # 理想 QAM 星座图（平均功率归一化）
+        ref_data = np.sqrt(1) * (
+            np.array([complex(x, y) for x in np.linspace(-(np.sqrt(nqam)-1), (np.sqrt(nqam)-1), int(np.sqrt(nqam))) 
+                                for y in np.linspace(-(np.sqrt(nqam)-1), (np.sqrt(nqam)-1), int(np.sqrt(nqam)))])
+            / np.sqrt((2/3)*(nqam - 1))  # 平均功率归一化:w
+        )
+
+        # # 将 IQ 归一化到均方根为 1
+        IQ_norm = IQ_filtered / np.sqrt(np.mean(np.abs(IQ_filtered)**2))
+
+        # # 找出 IQ_norm 中每个点最近的理想星座点
+        # # （使用广播 + cdist 可加速）
+        ideal_IQ = np.zeros_like(IQ_norm, dtype=complex)
+        # import time
+        # t = time.time()
+        # dist_matrix = cdist(IQ_norm.reshape(-1,1), ref_data.reshape(-1,1), metric='euclidean')
+        # logger.debug(f"Distance matrix computed in {time.time() - t:.4f} seconds")
+        # 示例：IQ_norm 有 1024 个复数点，ref_data 是星座参考点（如 QAM 的16个）
+
+        # 将复数转换成二维实数向量
+        IQ_vecs = np.column_stack((IQ_norm.real, IQ_norm.imag))
+        ref_vecs = np.column_stack((ref_data.real, ref_data.imag))
+
+        # 计算每个 IQ 点到所有参考点的距离
+        dist_matrix = cdist(IQ_vecs, ref_vecs, metric='euclidean')
+
+        # 每个点到最近参考点的距离 & 对应参考点的索引
+        min_dists = np.min(dist_matrix, axis=1)         # shape: (1024,)
+        nearest_indices = np.argmin(dist_matrix, axis=1)  # shape: (1024,)
+        # closest_indices = np.argmin(dist_matrix, axis=1)
+        ideal_IQ = ref_data[nearest_indices]
+
+        # # EVM 计算
+        evm_vector = IQ_norm - ideal_IQ
+        EVM_rms = np.sqrt(np.mean(np.abs(evm_vector)**2))
+        EVM_ref = np.sqrt(np.mean(np.abs(ideal_IQ)**2))
+        EVM = (EVM_rms / EVM_ref) * 100
+        # # print(f"EVM = {EVM_percent:.2f} %")
+
+        # # --- IQ 增益不平衡 ---
+        gain_I = np.sqrt(np.mean(np.real(IQ_filtered)**2))
+        gain_Q = np.sqrt(np.mean(np.imag(IQ_filtered)**2))
+        gain_imbalance_db = 20 * np.log10(gain_I / gain_Q)
+        # #print(f"Gain Imbalance = {gain_imbalance_db:.2f} dB")
+
+        # # --- IQ 相位不平衡 ---
+        I_dc = np.real(IQ_filtered) - np.mean(np.real(IQ_filtered))
+        Q_dc = np.imag(IQ_filtered) - np.mean(np.imag(IQ_filtered))
+
+        iq_imp_amp = np.arccos(np.clip(np.dot(I_dc, Q_dc) / (np.linalg.norm(I_dc) * np.linalg.norm(Q_dc)), -1.0, 1.0))
+        iq_imp_phase = np.degrees(iq_imp_amp) - 90
+        #print(f"Phase Imbalance = {phi_deg:.2f} degrees")
+
+        # 计算出 mod_type, EVM, iq_imp_amp, iq_imp_phase
+        mod_type = "QAM-16"  
+        EVM = 0.05
+        iq_imp_amp = 0.02
+        iq_imp_phase = 0.01
 
 
         # === 频谱分析（使用升采样信号） ===

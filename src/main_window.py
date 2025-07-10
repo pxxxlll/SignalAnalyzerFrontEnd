@@ -12,13 +12,16 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("Analyzer")
 
 
+from functools import wraps
 def update_wrapper(func):
     """
-    更新数据装饰器，用于给每个 update 函数添加信号量释放语
+    装饰器：自动释放 UI 信号量
     """
+    @wraps(func)
     def wrapper(self, *args, **kwargs):
-        logger.debug(f"Calling update function: {func.__name__}")
+        logger.debug(f"Calling {func.__name__}")
         result = func(self, *args, **kwargs)
+        self._any_update_done()
         return result
     return wrapper
 
@@ -122,22 +125,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lbl_conn_light.setStyleSheet(style)
 
     @pyqtSlot(np.ndarray, np.ndarray)
+    @update_wrapper
     def update_spectrum(self, freqs: np.ndarray, values: np.ndarray):
         self.figures.update_spectrum(freqs, values)
-        logger.debug("Calling update_spectrum")
-        self._any_update_done()  # 释放信号量，表示更新已完成
+        # logger.debug("Calling update_spectrum")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray)
+    @update_wrapper
     def update_constellation(self, iq: np.ndarray): 
         """
         更新星座图。
         :param iq: 复数数组，形状为 (N, )，表示 I/Q 数据
         """
         self.figures.update_constellation(iq)
-        logger.debug("Calling update_constellation")
-        self._any_update_done()  # 释放信号量，表示更新已完成
+        # logger.debug("Calling update_constellation")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
     
+
     @pyqtSlot(np.ndarray, np.ndarray)
+    @update_wrapper
     def update_iq(self, i_data: np.ndarray, q_data: np.ndarray):
         """
         更新 I/Q 图。
@@ -146,10 +153,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         logger.debug(f"Updating I/Q data: {len(i_data)} samples")
         self.figures.update_iq(i_data, q_data)
-        logger.debug("Calling update_iq")
-        self._any_update_done()  # 释放信号量，表示更新已完成
+        # logger.debug("Calling update_iq")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray, np.ndarray)
+    @update_wrapper
     def update_sweep_spectrum(self, freqs: np.ndarray, values: np.ndarray):
         """
         更新扫频图。
@@ -157,10 +165,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param values: 幅度数组
         """
         self.figures.update_sweep_spectrum(freqs, values)   
-        logger.debug("Calling update_sweep_spectrum")
-        self._any_update_done()  # 释放信号量，表示更新已完成
+        # logger.debug("Calling update_sweep_spectrum")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray, np.ndarray)
+    @update_wrapper
     def update_s21(self, s21_x, s21_y):
         """
         更新 S21 图。
@@ -168,8 +177,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param s21_y: 幅度数组
         """
         self.figures.update_s21(s21_x, s21_y)
-        logger.debug("Calling update_s21")
-        self._any_update_done()  # 释放信号量，表示更新已完成
+        # logger.debug("Calling update_s21")
+        # self._any_update_done()  # 释放信号量，表示更新已完成
 
 
 # 运行窗口
