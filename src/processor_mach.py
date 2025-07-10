@@ -27,8 +27,9 @@ class SignalProcessor(QObject):
     signal_sweep_ready = pyqtSignal(np.ndarray, np.ndarray)
     signal_constellation_ready = pyqtSignal(np.ndarray)
     signal_iq_ready = pyqtSignal(np.ndarray, np.ndarray)
-    signal_frame_end = pyqtSignal()
     signal_s21_ready = pyqtSignal(np.ndarray, np.ndarray)
+
+    signal_frame_end = pyqtSignal()
 
     def __init__(self, sweep_config: SweepConfig, parent=None):
         super().__init__(parent)
@@ -71,6 +72,8 @@ class SignalProcessor(QObject):
             logger.warning(f"IQ decode failed: {e}")
             return
 
+        self.signal_iq_ready.emit(iq.real, iq.imag)
+
 
         # === 升采样 + RRC滤波 ===
         rx_up = np.zeros(len(iq) * 2, dtype=np.complex64)
@@ -88,14 +91,14 @@ class SignalProcessor(QObject):
         idx = np.where(np.abs(iq_corrected) > threshold)[0]
         idx = idx[5:]  # 去掉前 5 个样点
         IQ_filtered = iq_corrected[idx]
-
+        self.signal_constellation_ready.emit(IQ_filtered)
 
 
         # === 频谱分析（使用升采样信号） ===
         fft_len = int(2 ** np.ceil(np.log2(len(rx_interp))))
         rx_fft = 20 * np.log10(np.abs(np.fft.fftshift(np.fft.fft(rx_interp, fft_len))) + 1e-6)
-
         single_freqs = np.linspace(-sample_freq / 2, sample_freq / 2, len(rx_fft)) + lo_freq_hz
+        self.signal_fft_ready.emit(single_freqs, rx_fft)
 
         # === 更新 sweep 图谱（子频段） ===
         center = fft_len // 2
@@ -108,14 +111,11 @@ class SignalProcessor(QObject):
 
         spectrum_combined = np.concatenate(self.sweep_mags)
         freq_axis = np.linspace(self.sweep_config.start, self.sweep_config.stop, len(spectrum_combined))
+        self.signal_sweep_ready.emit(freq_axis, spectrum_combined)
 
         logger.debug(f"Processed frame: LO = {lo_freq_hz / 1e6:.2f} MHz, "
                     f"Sample Freq = {sample_freq / 1e6:.2f} MHz, "
                     f"Current Step = {sweep_step}, Sweep Points = {self.sweep_config.points}")
-
-        if sweep_step >= self.sweep_config.points - 1:
-            self._reset_sweep_buffers()
-            # logger.debug(f"Sweep completed at step {sweep_step}, resetting buffers.")
 
         # 参数设置
         f_start = 1e9       # 起始频率：1 GHz
@@ -135,15 +135,14 @@ class SignalProcessor(QObject):
         noise = 1.5 * np.random.normal(0, 0.5, size=freqs.shape)
         s21_db += noise
         self.signal_s21_ready.emit(freqs, s21_db)
-        self.signal_constellation_ready.emit(IQ_filtered)
-        self.signal_fft_ready.emit(single_freqs, rx_fft)
-        self.signal_iq_ready.emit(iq.real, iq.imag)
-        self.signal_sweep_ready.emit(freq_axis, spectrum_combined)
 
-        import time
-        time.sleep(0.5)
+
+
         self.signal_frame_end.emit()
 
+        if sweep_step >= self.sweep_config.points - 1:
+            self._reset_sweep_buffers()
+            # logger.debug(f"Sweep completed at step {sweep_step}, resetting buffers.")
 
 
 

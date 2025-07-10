@@ -19,7 +19,7 @@ class FigureManager:
         self.ui.plt_spectrum.showGrid(x=True, y=True)
 
     def _init_sweep_spectrum(self):  # ✅ 新增方法
-        self.sweep_curve = self.ui.plt_sweep_spectrum.plot(pen='g')
+        self.sweep_curve = self.ui.plt_sweep_spectrum.plot(pen='c')
         self.ui.plt_sweep_spectrum.setLabel('left', '幅度', units='dB')
         self.ui.plt_sweep_spectrum.setLabel('bottom', '频率', units='Hz')
         self.ui.plt_sweep_spectrum.showGrid(x=True, y=True)
@@ -42,7 +42,7 @@ class FigureManager:
         """
         初始化 S21 图像。
         """
-        self.s21_curve = self.ui.plt_s21.plot(pen='m')
+        self.s21_curve = self.ui.plt_s21.plot(pen='g')
         self.ui.plt_s21.setLabel('left', '幅度', units='dB')
         self.ui.plt_s21.setLabel('bottom', '频率', units='Hz')
         self.ui.plt_s21.showGrid(x=True, y=True)

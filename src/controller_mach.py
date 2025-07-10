@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QThread, QTimer
+from PyQt5.QtCore import QThread, QTimer, pyqtSlot, QObject
 
 from functools import partial
 
@@ -12,7 +12,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
-class MainController:
+class MainController(QObject):
     def __init__(self):
         super().__init__()
 
@@ -38,11 +38,15 @@ class MainController:
 
         # 各图形更新信号
         self.processor.signal_fft_ready.connect(self.display.update_spectrum)
-        self.processor.signal_sweep_ready.connect(self.display.figures.update_sweep_spectrum)
+        self.processor.signal_sweep_ready.connect(self.display.update_sweep_spectrum)
         self.processor.signal_constellation_ready.connect(self.display.update_constellation)
         self.processor.signal_iq_ready.connect(self.display.update_iq)
-        self.processor.signal_frame_end.connect(self.receiver.next_sweep)
         self.processor.signal_s21_ready.connect(self.display.update_s21)
+
+        # self.processor.signal_frame_end.connect(self.receiver.next_sweep) # 
+        self.processor.signal_frame_end.connect(self.on_frame_processed) # 申请信号量
+        self.display.signal_ui_all_updated.connect(self.receiver.next_sweep)
+
 
         # UI → 接收控制
         self.display.signal_try_conn.connect(self.receiver.start)
@@ -57,7 +61,7 @@ class MainController:
         self.display.btn_stop.clicked.connect(lambda: self.receiver.send_cmd("stop"))
 
         # === 预留：UI 扫频参数更改接口 ===
-        # self.display.signal_sweep_config_changed.connect(self.processor.update_sweep_range)
+        # self.display.signal_sweep_config_changed.connect(self.processor.update_sweep_range)u'p
 
     def set_sweep_config(self, config: SweepConfig):
         # 不替换 sweep_config 对象，而是更新其字段
@@ -66,6 +70,15 @@ class MainController:
         self.sweep_config.points = config.points
         self.sweep_config.reset_runtime_state()
         logging.info(f"Sweep config updated: {self.sweep_config}")
+    
+    @pyqtSlot()
+    def on_frame_processed(self):
+        """
+        当 Processor 处理完后，通过信号激活此槽
+        """
+        logging.debug("Frame processed, requesting UI update...")
+        QTimer.singleShot(0, self.display.wait_for_ui_update)
+
 
     def closeEvent(self, event):
         self.receiver.stop()

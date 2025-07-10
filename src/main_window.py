@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
-from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot, QSemaphore
 from ui.analyzer import Ui_MainWindow  
 import pyqtgraph as pg
 import sys
@@ -11,17 +11,33 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("Analyzer")
 
+
+def update_wrapper(func):
+    """
+    更新数据装饰器，用于给每个 update 函数添加信号量释放语
+    """
+    def wrapper(self, *args, **kwargs):
+        logger.debug(f"Calling update function: {func.__name__}")
+        result = func(self, *args, **kwargs)
+        return result
+    return wrapper
+
+
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     signal_try_conn = pyqtSignal()
     signal_try_off = pyqtSignal()
 
+    signal_ui_all_updated = pyqtSignal()
+
     def __init__(self):
         super().__init__()
 
+
         self.setupUi(self)
         self.figures = FigureManager(self)  # 把 self 传进去以访问 ui 对象
-
+        self.update_done_sema = QSemaphore(0) # 用于给 Controller 申请
+        self.total_expected_updates = 5
 
         # 设置常量字典
         self.lbl_conn_state_texts = {
@@ -46,6 +62,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.conn_state_set('normal')  # 初始状态为未连接
 
         self.btn_conn.clicked.connect(self.on_btn_conn_clicekd)  # 连接按钮点击事件
+    
+    def _any_update_done(self):
+        """
+        检查是否所有更新都已完成。
+        """
+        self.update_done_sema.release(1)
+
+    def wait_for_ui_update(self):
+        """
+        等待所有更新完成。
+        """
+        logger.debug("Waiting for all UI updates to complete...")
+        logger.debug(f"Total expected updates: {self.total_expected_updates}")
+        logger.debug(f"Current semaphore count: {self.update_done_sema.available()}")
+        logger.debug("Waiting for semaphore to release...")
+        self.update_done_sema.acquire(self.total_expected_updates)
+        logger.debug("All UI updates completed.")
+        self.signal_ui_all_updated.emit()  # 发射信号，表示所有更新已完成
 
     @pyqtSlot()
     def on_btn_conn_clicekd(self):
@@ -90,6 +124,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @pyqtSlot(np.ndarray, np.ndarray)
     def update_spectrum(self, freqs: np.ndarray, values: np.ndarray):
         self.figures.update_spectrum(freqs, values)
+        logger.debug("Calling update_spectrum")
+        self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray)
     def update_constellation(self, iq: np.ndarray): 
@@ -98,6 +134,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param iq: 复数数组，形状为 (N, )，表示 I/Q 数据
         """
         self.figures.update_constellation(iq)
+        logger.debug("Calling update_constellation")
+        self._any_update_done()  # 释放信号量，表示更新已完成
     
     @pyqtSlot(np.ndarray, np.ndarray)
     def update_iq(self, i_data: np.ndarray, q_data: np.ndarray):
@@ -108,6 +146,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         logger.debug(f"Updating I/Q data: {len(i_data)} samples")
         self.figures.update_iq(i_data, q_data)
+        logger.debug("Calling update_iq")
+        self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray, np.ndarray)
     def update_sweep_spectrum(self, freqs: np.ndarray, values: np.ndarray):
@@ -117,6 +157,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param values: 幅度数组
         """
         self.figures.update_sweep_spectrum(freqs, values)   
+        logger.debug("Calling update_sweep_spectrum")
+        self._any_update_done()  # 释放信号量，表示更新已完成
 
     @pyqtSlot(np.ndarray, np.ndarray)
     def update_s21(self, s21_x, s21_y):
@@ -126,6 +168,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         :param s21_y: 幅度数组
         """
         self.figures.update_s21(s21_x, s21_y)
+        logger.debug("Calling update_s21")
+        self._any_update_done()  # 释放信号量，表示更新已完成
+
 
 # 运行窗口
 if __name__ == "__main__":
